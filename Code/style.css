@@ -1,0 +1,180 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #74a1bc;
+}
+
+main {
+  height: calc(100vh - 90px);
+  background-color: #74a1bc;
+}
+
+/* ------------- STARTSEITE ------------- */
+
+.startseite {
+  min-height: 100vh;
+  background-color: #74a1bc;
+  display: flex;
+  flex-direction: column;
+}
+
+.startseite header {
+  height: 165px;
+  background-color: #38627c;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.startseite main {
+  flex: 1;
+  background-color: #74a1bc;
+  position: relative;
+}
+
+.startseite footer {
+  height: 28px;
+  background-color: #38627c;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  color: white;
+  font-size: 14px;
+}
+
+.logo-container {
+  position: absolute;
+  top: 50%;
+  left: 90px;
+  transform: translateY(-50%);
+}
+
+.logo {
+  height: 80px;
+  width: auto;
+}
+
+.hero {
+  width: 500px;
+  position: absolute;
+  left: 90px;
+  top: 70px;
+}
+
+.hero h1 {
+  font-size: 22px;
+  font-weight: bold;
+  color: #12385a;
+  margin-bottom: 8px;
+}
+
+.hero p {
+  font-size: 20px;
+  line-height: 1.45;
+  color: #12385a;
+  margin: 0 0 6px 0;
+}
+
+.hero-btn {
+  display: inline-block;
+  margin-top: 14px;
+  margin-left: 180px;
+  text-decoration: none;
+  background-color: #4d8fba;
+  color: white;
+  padding: 14px 22px;
+  border-radius: 22px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.hero-btn:hover {
+  background-color: #3d7ca3;
+}
+
+/* ------------- FEED ------------- */
+
+.feed {
+  min-height: 100vh;
+  background-color: #74a1bc;
+}
+
+.feed header {
+  height: 94px;
+  background-color: #38627c;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+}
+
+.feed main {
+  height: calc(100vh - 94px);
+  background-color: #74a1bc;
+}
+
+.header-logo {
+  position: absolute;
+  left: 32px;
+  top: 50%;
+  transform: translateY(-42%);
+  display: flex;
+  align-items: center;
+}
+
+.small-logo {
+  height: 48px;
+  width: auto;
+}
+
+.main-nav {
+  display: flex;
+  gap: 26px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding-top: 38px;
+}
+
+.main-nav a {
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+  font-weight: normal;
+  padding: 8px 14px;
+  border-radius: 18px;
+  display: inline-block;
+  line-height: 1;
+  transition: background-color 0.2s ease;
+}
+
+.main-nav a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.main-nav a.active {
+  background-color: rgba(180, 210, 230, 0.65);
+}
+
+.profile-btn {
+  position: absolute;
+  right: 42px;
+  top: 50%;
+  transform: translateY(-40%);
+  width: 54px;
+  height: 54px;
+  border: none;
+  border-radius: 50%;
+  background-color: white;
+  cursor: pointer;
+}
+
+.profile-btn:hover {
+  background-color: #e6e6e6;
+}
