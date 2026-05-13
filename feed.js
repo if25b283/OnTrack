@@ -6,16 +6,3 @@ onAuthStateChanged(auth, (user) => {
         window.location.href = "login.html";
     }
 });
-
-const profileBtn = document.querySelector(".profile-btn");
-
-if (profileBtn) {
-    profileBtn.addEventListener("click", async () => {
-        try {
-            await signOut(auth);
-            window.location.href = "login.html";
-        } catch (error) {
-            console.error("Logout failed:", error);
-        }
-    });
-}
