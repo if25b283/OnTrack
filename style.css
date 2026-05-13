@@ -178,3 +178,82 @@ main {
 .profile-btn:hover {
   background-color: #e6e6e6;
 }
+
+.register-page,
+.login-page {
+  min-height: 100vh;
+  background-color: #74a1bc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-main {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-box {
+  width: 360px;
+  background-color: rgba(255, 255, 255, 0.12);
+  padding: 35px 30px;
+  border-radius: 24px;
+  text-align: center;
+}
+
+.auth-logo {
+  width: 180px;
+  margin-bottom: 20px;
+}
+
+.auth-box h1 {
+  color: white;
+  margin-bottom: 20px;
+}
+
+.auth-box form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.auth-box input {
+  padding: 12px 14px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+}
+
+.auth-box button {
+  padding: 12px 14px;
+  border: none;
+  border-radius: 12px;
+  background-color: #38627c;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.auth-box button:hover {
+  background-color: #2f5368;
+}
+
+#register-message,
+#login-message {
+  margin-top: 14px;
+  color: white;
+  min-height: 20px;
+}
+
+.auth-link-text {
+  margin-top: 16px;
+  color: white;
+}
+
+.auth-link-text a {
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+}

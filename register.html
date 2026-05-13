@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - OnTrack</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="register-page">
+
+    <main class="auth-main">
+        <section class="auth-box">
+            <img src="images/logo.png" alt="OnTrack Logo" class="auth-logo">
+
+            <h1>Create your account</h1>
+
+            <form id="register-form">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="email" id="email" placeholder="E-Mail" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit">Register</button>
+            </form>
+
+            <p id="register-message"></p>
+
+            <p class="auth-link-text">
+                Already have an account?
+                <a href="login.html">Log in</a>
+            </p>
+        </section>
+    </main>
+
+    <script type="module" src="register.js"></script>
+</body>
+
+</html>
