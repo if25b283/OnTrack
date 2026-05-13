@@ -22,7 +22,10 @@ form.addEventListener("submit", async (event) => {
             uid: user.uid,
             username: username,
             email: email,
-            createdAt: new Date().toISOString()
+            createdAt: new Date().toISOString(),
+            followersCount: 0,
+            followingCount: 0,
+            profileImage: ""
         });
 
         message.textContent = "Registration successful!";
