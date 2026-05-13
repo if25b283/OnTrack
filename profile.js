@@ -2,6 +2,8 @@ import { auth, db } from "./firebase-config.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
+console.log("profile.js loaded");
+
 const usernameEl = document.getElementById("profile-username");
 const emailEl = document.getElementById("profile-email");
 const followersEl = document.getElementById("followers-count");
@@ -10,6 +12,8 @@ const profileImageEl = document.getElementById("profile-image");
 const logoutBtn = document.getElementById("logout-btn");
 
 onAuthStateChanged(auth, async (user) => {
+    console.log("Profile user:", user);
+
     if (!user) {
         window.location.href = "login.html";
         return;
@@ -24,7 +28,6 @@ onAuthStateChanged(auth, async (user) => {
 
             usernameEl.textContent = userData.username || "User";
             emailEl.textContent = userData.email || user.email || "No email";
-
             followersEl.textContent = userData.followersCount ?? 0;
             followingEl.textContent = userData.followingCount ?? 0;
 

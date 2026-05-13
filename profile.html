@@ -2,15 +2,18 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Profile - OnTrack</title>
-    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="style.css" />
 </head>
 
 <body class="profile-page">
 
+    <!-- HEADER -->
     <header class="main-header">
+
         <div class="header-logo">
             <img src="images/logo.png" alt="OnTrack Logo" class="small-logo">
         </div>
@@ -23,35 +26,106 @@
             <a href="groups.html">Groups</a>
         </nav>
 
-        <button class="profile-btn active-profile"></button>
+        <button class="close-profile-btn" onclick="window.location.href='feed.html'">
+            ✕
+        </button>
+
     </header>
 
+    <!-- PROFILE -->
     <main class="profile-main">
-        <section class="profile-card">
-            <div class="profile-image-wrapper">
-                <img src="images/default-profile.png" alt="Profile picture" id="profile-image" class="profile-image">
-            </div>
 
-            <h1 id="profile-username">Username</h1>
-            <p id="profile-email">email@example.com</p>
+        <section class="profile-container">
 
-            <div class="profile-stats">
-                <div class="stat-box">
-                    <span id="followers-count" class="stat-number">0</span>
-                    <span class="stat-label">Followers</span>
+            <!-- TOP -->
+            <div class="profile-top">
+
+                <!-- PROFILE IMAGE -->
+                <div class="profile-image-section">
+                    <img src="images/default-profile.png" alt="Profile picture" id="profile-image"
+                        class="profile-image">
                 </div>
 
-                <div class="stat-box">
-                    <span id="following-count" class="stat-number">0</span>
-                    <span class="stat-label">Following</span>
+                <!-- INFO -->
+                <div class="profile-info">
+
+                    <h1 id="profile-username">Username</h1>
+
+                    <!-- STATS -->
+                    <div class="profile-stats">
+
+                        <div class="stat">
+                            <span id="posts-count">0</span>
+                            <p>Posts</p>
+                        </div>
+
+                        <div class="stat">
+                            <span id="followers-count">0</span>
+                            <p>Followers</p>
+                        </div>
+
+                        <div class="stat">
+                            <span id="following-count">0</span>
+                            <p>Following</p>
+                        </div>
+
+                    </div>
+
+                    <!-- EMAIL -->
+                    <p id="profile-email">email@example.com</p>
+
+                    <!-- EDIT BUTTON -->
+                    <button class="edit-profile-btn" onclick="window.location.href='edit-profile.html'">
+                        Edit Profile
+                    </button>
+
                 </div>
             </div>
 
-            <button id="logout-btn" class="logout-btn">Log out</button>
+            <!-- POSTS -->
+            <div class="posts-grid">
+
+                <!-- PLACEHOLDER POSTS -->
+
+                <div class="post-box image-post">
+                    <img src="images/post1.jpg" alt="">
+                </div>
+
+                <div class="post-box text-post">
+                    Ayyyy was geht leute?!
+                </div>
+
+                <div class="post-box image-post">
+                    <img src="images/post2.jpg" alt="">
+                </div>
+
+                <div class="post-box image-post">
+                    <img src="images/post3.jpg" alt="">
+                </div>
+
+                <div class="post-box image-post">
+                    <img src="images/post4.jpg" alt="">
+                </div>
+
+                <div class="post-box text-post">
+                    My first post guys kinda nervous...
+                </div>
+
+            </div>
+
+            <!-- LOGOUT -->
+            <div class="logout-wrapper">
+                <button id="logout-btn" class="logout-btn">
+                    Log out
+                </button>
+            </div>
+
         </section>
+
     </main>
 
     <script type="module" src="profile.js"></script>
+
 </body>
 
 </html>
