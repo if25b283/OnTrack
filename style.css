@@ -106,7 +106,9 @@ main {
   background-color: #74a1bc;
 }
 
-.feed header {
+/* UNIVERSAL HEADER */
+
+.main-header {
   height: 94px;
   background-color: #38627c;
   position: relative;
@@ -114,8 +116,10 @@ main {
   align-items: flex-start;
 }
 
-.feed main {
-  height: calc(100vh - 94px);
+/* UNIVERSAL MAIN */
+
+.page-main {
+  min-height: calc(100vh - 94px);
   background-color: #74a1bc;
 }
 
@@ -199,10 +203,11 @@ main {
 
 .auth-box {
   width: 360px;
-  background-color: rgba(255, 255, 255, 0.12);
+  background-color: #38627c;
   padding: 35px 30px;
   border-radius: 24px;
   text-align: center;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
 }
 
 .auth-logo {
@@ -222,10 +227,12 @@ main {
 }
 
 .auth-box input {
-  padding: 12px 14px;
+  padding: 14px 16px;
   border: none;
-  border-radius: 12px;
+  border-radius: 14px;
   font-size: 16px;
+  background-color: rgba(255, 255, 255, 0.9);
+  outline: none;
 }
 
 .auth-box button {
