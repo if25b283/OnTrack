@@ -3,7 +3,6 @@ import { supabase } from "./supabase-config.js";
 const DEFAULT_IMAGE =
     "https://media.istockphoto.com/id/2151669184/vector/vector-flat-illustration-in-grayscale-avatar-user-profile-person-icon-gender-neutral.jpg?s=612x612&w=0&k=20&c=UEa7oHoOL30ynvmJzSCIPrwwopJdfqzBs0q69ezQoM8=";
 
-
 const NAV_LINKS = [
     { href: "todo.html", label: "To-Do" },
     { href: "calendar.html", label: "Calendar" },
@@ -24,6 +23,11 @@ function buildHeader() {
         return `<a href="${href}"${isActive}>${label}</a>`;
     }).join("\n            ");
 
+    const profileBtn = currentPage !== "profile.html" ? `
+            <a href="profile.html" class="profile-btn">
+                <img id="header-profile-img" src="${DEFAULT_IMAGE}" alt="Profile" class="profile-btn-img">
+            </a>` : "";
+
     return `
         <header class="main-header">
             <div class="header-logo">
@@ -33,10 +37,7 @@ function buildHeader() {
             <nav class="main-nav">
                 ${navItems}
             </nav>
-
-            <a href="profile.html" class="profile-btn">
-                <img id="header-profile-img" src="${DEFAULT_IMAGE}" alt="Profile" class="profile-btn-img">
-            </a>
+            ${profileBtn}
         </header>
     `;
 }

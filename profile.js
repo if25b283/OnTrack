@@ -13,10 +13,6 @@ const logoutBtn = document.getElementById("logout-btn");
 
 const { data: { user } } = await supabase.auth.getUser();
 
-if (!user) {
-    window.location.href = "login.html";
-}
-
 async function loadProfile() {
     const { data, error } = await supabase
         .from("users")
@@ -76,6 +72,10 @@ profileImageInput.addEventListener("change", async () => {
         if (updateError) throw updateError;
 
         profileImageEl.src = imageUrl;
+
+        const headerImg = document.getElementById("header-profile-img");
+        if (headerImg) headerImg.src = imageUrl;
+
     } catch (error) {
         console.error(error);
     }
