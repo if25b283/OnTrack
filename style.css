@@ -672,10 +672,10 @@ main {
 .feed-container {
   max-width: 600px;
   margin: 0 auto;
-  padding: 32px 16px;
+  padding: 16px;        /* war 32px 16px */
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 12px;            /* war 20px */
 }
 
 /* Post composer */
@@ -802,11 +802,12 @@ main {
   background: rgba(255, 255, 255, 0.18);
   backdrop-filter: blur(10px);
   border-radius: 20px;
-  padding: 18px;
+  padding: 14px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
+
 
 .post-header {
   display: flex;
