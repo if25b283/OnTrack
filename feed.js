@@ -134,6 +134,8 @@ async function loadFeed() {
         .in("user_id", ids)
         .order("created_at", { ascending: false });
 
+    console.log("error details:", JSON.stringify(error));
+
     if (error) {
         feedEl.innerHTML = `<div class="feed-loading">Could not load posts.</div>`;
         return;
