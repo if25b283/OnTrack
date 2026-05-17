@@ -11,7 +11,6 @@
 
 <body class="profile-page">
 
-    <!-- HEADER -->
     <header class="main-header">
 
         <div class="header-logo">
@@ -28,26 +27,29 @@
 
     </header>
 
-    <!-- PROFILE -->
     <main class="page-main profile-main">
 
         <section class="profile-container">
 
-            <!-- TOP -->
             <div class="profile-top">
 
-                <!-- PROFILE IMAGE -->
                 <div class="profile-image-section">
-                    <img src="images/default-profile.png" alt="Profile picture" id="profile-image"
-                        class="profile-image">
+                    <label for="profile-image-input" class="profile-image-label">
+                        <img src="https://media.istockphoto.com/id/2151669184/vector/vector-flat-illustration-in-grayscale-avatar-user-profile-person-icon-gender-neutral.jpg?s=612x612&w=0&k=20&c=UEa7oHoOL30ynvmJzSCIPrwwopJdfqzBs0q69ezQoM8="
+                            alt="Profile picture" id="profile-image" class="profile-image">
+
+                        <span class="profile-image-overlay">Change</span>
+                    </label>
+
+                    <input type="file" id="profile-image-input" accept="image/*" hidden>
+
+                    <p id="upload-message" class="upload-message"></p>
                 </div>
 
-                <!-- INFO -->
                 <div class="profile-info">
 
                     <h1 id="profile-username">Username</h1>
 
-                    <!-- STATS -->
                     <div class="profile-stats">
 
                         <div class="stat">
@@ -67,21 +69,12 @@
 
                     </div>
 
-                    <!-- EMAIL -->
                     <p id="profile-email">email@example.com</p>
-
-                    <!-- EDIT BUTTON -->
-                    <button class="edit-profile-btn" onclick="window.location.href='edit-profile.html'">
-                        Edit Profile
-                    </button>
 
                 </div>
             </div>
 
-            <!-- POSTS -->
             <div class="posts-grid">
-
-                <!-- PLACEHOLDER POSTS -->
 
                 <div class="post-box image-post">
                     <img src="images/post1.jpg" alt="">
@@ -109,7 +102,6 @@
 
             </div>
 
-            <!-- LOGOUT -->
             <div class="logout-wrapper">
                 <button id="logout-btn" class="logout-btn">
                     Log out

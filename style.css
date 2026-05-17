@@ -281,45 +281,92 @@ main {
   min-height: 100vh;
 }
 
-/* MAIN */
+.page-main {
+  min-height: calc(100vh - 94px);
+  height: auto;
+  background-color: #74a1bc;
+}
 
 .profile-main {
   display: flex;
   justify-content: center;
-  padding: 50px 20px;
+  align-items: flex-start;
+  padding: 42px 20px;
+  box-sizing: border-box;
 }
-
-/* CONTAINER */
 
 .profile-container {
-  width: 850px;
+  width: 760px;
+  min-height: auto;
+  height: auto;
   background-color: rgba(255, 255, 255, 0.15);
   border-radius: 24px;
-  padding: 40px;
+  padding: 34px;
   backdrop-filter: blur(10px);
-  margin-bottom: 60px;
+  margin-bottom: 40px;
+  box-sizing: border-box;
 }
-
-/* TOP SECTION */
 
 .profile-top {
   display: flex;
-  gap: 40px;
+  gap: 34px;
   align-items: center;
-  margin-bottom: 40px;
+  margin-bottom: 34px;
 }
 
-/* PROFILE IMAGE */
+.profile-image-section {
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.profile-image-label {
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: block;
+  position: relative;
+  cursor: pointer;
+  border: 5px solid rgba(255, 255, 255, 0.45);
+  background-color: white;
+}
 
 .profile-image {
-  width: 170px;
-  height: 170px;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
+  display: block;
   object-fit: cover;
-  border: 5px solid rgba(255, 255, 255, 0.4);
 }
 
-/* INFO */
+.profile-image-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 8px 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  color: white;
+  font-size: 13px;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.profile-image-label:hover .profile-image-overlay {
+  opacity: 1;
+}
+
+.upload-message {
+  color: white;
+  font-size: 12px;
+  margin-top: 8px;
+  text-align: center;
+  min-height: 16px;
+}
 
 .profile-info {
   flex: 1;
@@ -327,23 +374,21 @@ main {
 
 #profile-username {
   color: white;
-  font-size: 42px;
-  margin-bottom: 20px;
+  font-size: 32px;
+  margin: 0 0 16px 0;
 }
 
 #profile-email {
   color: white;
   opacity: 0.9;
-  margin-top: 15px;
-  margin-bottom: 20px;
-  font-size: 18px;
+  margin-top: 14px;
+  margin-bottom: 0;
+  font-size: 15px;
 }
-
-/* STATS */
 
 .profile-stats {
   display: flex;
-  gap: 45px;
+  gap: 34px;
 }
 
 .stat {
@@ -352,45 +397,27 @@ main {
 
 .stat span {
   color: white;
-  font-size: 34px;
+  font-size: 26px;
   font-weight: bold;
 }
 
 .stat p {
   color: white;
-  margin-top: 5px;
+  margin-top: 4px;
+  font-size: 14px;
 }
-
-/* BUTTONS */
-
-.edit-profile-btn {
-  padding: 12px 26px;
-  border: none;
-  border-radius: 14px;
-  background-color: white;
-  color: #38627c;
-  font-weight: bold;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.edit-profile-btn:hover {
-  background-color: #e4eef5;
-}
-
-/* POSTS */
 
 .posts-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(3, 150px);
+  gap: 18px;
+  justify-content: center;
+  align-items: center;
 }
 
-/* POST BOX */
-
 .post-box {
-  aspect-ratio: 1/1;
+  width: 150px;
+  height: 150px;
   border-radius: 16px;
   overflow: hidden;
   background-color: white;
@@ -400,9 +427,10 @@ main {
   align-items: center;
 
   color: #1d3557;
-  font-size: 22px;
+  font-size: 18px;
   text-align: center;
-  padding: 20px;
+  padding: 14px;
+  box-sizing: border-box;
 }
 
 .image-post img {
@@ -411,21 +439,19 @@ main {
   object-fit: cover;
 }
 
-/* LOGOUT */
-
 .logout-wrapper {
   display: flex;
   justify-content: center;
-  margin-top: 50px;
+  margin-top: 34px;
 }
 
 .logout-btn {
-  padding: 14px 40px;
+  padding: 12px 34px;
   border: none;
   border-radius: 16px;
   background-color: white;
   color: #38627c;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
   cursor: pointer;
   transition: 0.2s;
@@ -433,4 +459,29 @@ main {
 
 .logout-btn:hover {
   background-color: #e4eef5;
+}
+
+@media (max-width: 780px) {
+  .profile-container {
+    width: 100%;
+    padding: 26px 18px;
+  }
+
+  .profile-top {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .profile-stats {
+    justify-content: center;
+  }
+
+  .posts-grid {
+    grid-template-columns: repeat(2, 135px);
+  }
+
+  .post-box {
+    width: 135px;
+    height: 135px;
+  }
 }
