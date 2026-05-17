@@ -133,6 +133,7 @@ async function loadFeed() {
     console.log("ids:", ids);
     console.log("posts:", posts);
     console.log("error:", error);
+    console.log("error details:", JSON.stringify(error));
 
     if (error) {
         feedEl.innerHTML = `<div class="feed-loading">Could not load posts.</div>`;
