@@ -224,3 +224,17 @@ function escapeHtml(str) {
 }
 
 loadFeed();
+
+const { data: posts, error } = await supabase
+    .from("posts")
+    .select(`
+        post_id, content, image_url, created_at,
+        users (id, username, profile_image),
+        post_likes (user_id)
+    `)
+    .in("user_id", ids)
+    .order("created_at", { ascending: false });
+
+console.log("ids:", ids);
+console.log("posts:", posts);
+console.log("error:", error);
