@@ -43,8 +43,12 @@ function closeModal() {
 
 fab.addEventListener("click", openModal);
 closeBtn.addEventListener("click", closeModal);
-overlay.addEventListener("click", (e) => { if (e.target === overlay) closeModal(); });
-document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
+overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) closeModal();
+});
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeModal();
+});
 
 // ---- Auto-grow textarea ----
 textarea.addEventListener("input", () => {
@@ -124,16 +128,11 @@ async function loadFeed() {
         .from("posts")
         .select(`
             post_id, content, image_url, created_at,
-            users (id, username, profile_image),
+            users!posts_user_id_fkey (id, username, profile_image),
             post_likes (user_id)
         `)
         .in("user_id", ids)
         .order("created_at", { ascending: false });
-
-    console.log("ids:", ids);
-    console.log("posts:", posts);
-    console.log("error:", error);
-    console.log("error details:", JSON.stringify(error));
 
     if (error) {
         feedEl.innerHTML = `<div class="feed-loading">Could not load posts.</div>`;
