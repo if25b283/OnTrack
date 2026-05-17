@@ -4,13 +4,10 @@ body {
   padding: 0;
 }
 
-html {
-  scrollbar-gutter: stable;
-}
-
 body {
   font-family: Arial, sans-serif;
   background-color: #74a1bc;
+  overflow-y: scroll;
 }
 
 main {
