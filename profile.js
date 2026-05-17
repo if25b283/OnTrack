@@ -13,20 +13,25 @@ if (!user) {
     window.location.href = "login.html";
 }
 
-const { data } = await supabase
+const { data, error } = await supabase
     .from("users")
     .select("*")
     .eq("id", user.id)
     .single();
 
+if (error) {
+    console.error(error);
+}
+
 if (data) {
     usernameEl.textContent = data.username || "User";
     emailEl.textContent = data.email || user.email;
-    followersEl.textContent = data.followersCount ?? 0;
-    followingEl.textContent = data.followingCount ?? 0;
 
-    if (data.profileImage) {
-        profileImageEl.src = data.profileImage;
+    followersEl.textContent = 0;
+    followingEl.textContent = 0;
+
+    if (data.profile_image) {
+        profileImageEl.src = data.profile_image;
     }
 }
 

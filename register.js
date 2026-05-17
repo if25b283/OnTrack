@@ -15,23 +15,35 @@ form.addEventListener("submit", async (event) => {
     try {
         const { data, error } = await supabase.auth.signUp({
             email,
-            password
+            password,
+            options: {
+                data: {
+                    username: username
+                }
+            }
         });
 
         if (error) throw error;
 
         const user = data.user;
 
-        await supabase.from("users").insert([
-            {
-                id: user.id,
-                username,
-                email,
-                followersCount: 0,
-                followingCount: 0,
-                profileImage: ""
-            }
-        ]);
+        if (!user) {
+            message.textContent = "Please check your email to confirm your account.";
+            return;
+        }
+
+        const { error: profileError } = await supabase
+            .from("users")
+            .insert([
+                {
+                    id: user.id,
+                    username: username,
+                    email: email,
+                    profile_image: null
+                }
+            ]);
+
+        if (profileError) throw profileError;
 
         message.textContent = "Registration successful!";
         window.location.href = "feed.html";
