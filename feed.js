@@ -134,8 +134,6 @@ async function loadFeed() {
         .in("user_id", ids)
         .order("created_at", { ascending: false });
 
-    console.log("error details:", JSON.stringify(error));
-
     if (error) {
         feedEl.innerHTML = `<div class="feed-loading">Could not load posts.</div>`;
         return;
@@ -160,6 +158,7 @@ function renderPost(post) {
     const likeCount = post.post_likes?.length || 0;
     const liked = post.post_likes?.some(l => l.user_id === user.id);
     const time = formatTime(post.created_at);
+    const isOwn = author?.id === user.id;
 
     return `
         <article class="post-card" data-id="${post.post_id}">
@@ -169,10 +168,11 @@ function renderPost(post) {
                     <span class="post-username">${username}</span>
                     <span class="post-time">${time}</span>
                 </div>
+                ${!isOwn ? `<button class="post-follow-btn" data-uid="${author?.id}">+ Follow</button>` : ""}
             </div>
 
-            ${post.content ? `<p class="post-content">${escapeHtml(post.content)}</p>` : ""}
             ${post.image_url ? `<img src="${post.image_url}" alt="Post image" class="post-image">` : ""}
+            ${post.content ? `<p class="post-content">${escapeHtml(post.content)}</p>` : ""}
 
             <div class="post-actions">
                 <button class="like-btn ${liked ? "liked" : ""}"
