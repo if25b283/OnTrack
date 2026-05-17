@@ -330,8 +330,8 @@ main {
   display: block;
   position: relative;
   cursor: pointer;
-  border: 5px solid rgba(255, 255, 255, 0.45);
-  background-color: white;
+  border: none;
+  background-color: transparent;
 }
 
 .profile-image {
@@ -358,14 +358,6 @@ main {
 
 .profile-image-label:hover .profile-image-overlay {
   opacity: 1;
-}
-
-.upload-message {
-  color: white;
-  font-size: 12px;
-  margin-top: 8px;
-  text-align: center;
-  min-height: 16px;
 }
 
 .profile-info {
