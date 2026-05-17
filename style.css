@@ -2,8 +2,6 @@ html,
 body {
   margin: 0;
   padding: 0;
-  height: 100%;
-  overflow: hidden;
 }
 
 body {
@@ -111,7 +109,11 @@ main {
 .main-header {
   height: 94px;
   background-color: #38627c;
-  position: relative;
+
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
   display: flex;
   align-items: flex-start;
 }
@@ -236,17 +238,22 @@ main {
 }
 
 .auth-box button {
-  padding: 12px 14px;
+  padding: 14px 16px;
   border: none;
-  border-radius: 12px;
-  background-color: #38627c;
+  border-radius: 14px;
+
+  background-color: #74a1bc;
   color: white;
+
   font-size: 16px;
+  font-weight: bold;
+
   cursor: pointer;
+  transition: 0.2s ease;
 }
 
 .auth-box button:hover {
-  background-color: #2f5368;
+  background-color: #8ab2ca;
 }
 
 #register-message,
@@ -290,6 +297,7 @@ main {
   border-radius: 24px;
   padding: 40px;
   backdrop-filter: blur(10px);
+  margin-bottom: 60px;
 }
 
 /* TOP SECTION */
@@ -369,18 +377,6 @@ main {
 
 .edit-profile-btn:hover {
   background-color: #e4eef5;
-}
-
-.close-profile-btn {
-  margin-left: auto;
-  margin-right: 40px;
-  margin-top: 20px;
-
-  background: none;
-  border: none;
-  color: white;
-  font-size: 40px;
-  cursor: pointer;
 }
 
 /* POSTS */

@@ -1,19 +1,9 @@
-import { auth, db } from "./firebase-config.js";
-
-import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
-
-import {
-    collection,
-    query,
-    where,
-    getDocs
-} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+import { supabase } from "./supabase-config.js";
 
 const form = document.getElementById("login-form");
 const message = document.getElementById("login-message");
 
 form.addEventListener("submit", async (event) => {
-
     event.preventDefault();
 
     const loginInput = document.getElementById("login-input").value.trim();
@@ -22,32 +12,32 @@ form.addEventListener("submit", async (event) => {
     message.textContent = "";
 
     try {
-
         let email = loginInput;
 
-        // Wenn Username statt Email eingegeben wurde
         if (!loginInput.includes("@")) {
+            const { data, error } = await supabase
+                .from("users")
+                .select("email")
+                .eq("username", loginInput)
+                .single();
 
-            const q = query(
-                collection(db, "users"),
-                where("username", "==", loginInput)
-            );
-
-            const querySnapshot = await getDocs(q);
-
-            if (querySnapshot.empty) {
+            if (error || !data) {
                 throw new Error("Username not found");
             }
 
-            email = querySnapshot.docs[0].data().email;
+            email = data.email;
         }
 
-        await signInWithEmailAndPassword(auth, email, password);
+        const { error: loginError } = await supabase.auth.signInWithPassword({
+            email,
+            password
+        });
+
+        if (loginError) throw loginError;
 
         window.location.href = "feed.html";
 
     } catch (error) {
-
         message.textContent = error.message;
     }
 });

@@ -1,6 +1,4 @@
-import { auth, db } from "./firebase-config.js";
-import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
-import { doc, setDoc } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+import { supabase } from "./supabase-config.js";
 
 const form = document.getElementById("register-form");
 const message = document.getElementById("register-message");
@@ -15,21 +13,29 @@ form.addEventListener("submit", async (event) => {
     message.textContent = "";
 
     try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
-
-        await setDoc(doc(db, "users", user.uid), {
-            uid: user.uid,
-            username: username,
-            email: email,
-            createdAt: new Date().toISOString(),
-            followersCount: 0,
-            followingCount: 0,
-            profileImage: ""
+        const { data, error } = await supabase.auth.signUp({
+            email,
+            password
         });
+
+        if (error) throw error;
+
+        const user = data.user;
+
+        await supabase.from("users").insert([
+            {
+                id: user.id,
+                username,
+                email,
+                followersCount: 0,
+                followingCount: 0,
+                profileImage: ""
+            }
+        ]);
 
         message.textContent = "Registration successful!";
         window.location.href = "feed.html";
+
     } catch (error) {
         message.textContent = error.message;
     }
