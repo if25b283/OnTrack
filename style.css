@@ -4,6 +4,10 @@ body {
   padding: 0;
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 body {
   font-family: Arial, sans-serif;
   background-color: #74a1bc;
@@ -484,4 +488,612 @@ main {
     width: 135px;
     height: 135px;
   }
+}
+
+/* ---- HEADER RIGHT (search + profile) ---- */
+
+.header-right {
+  position: absolute;
+  right: 42px;
+  top: 50%;
+  transform: translateY(-40%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* profile btn moves into header-right, remove old absolute positioning */
+.profile-btn {
+  position: static;
+  transform: none;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background-color: white;
+  cursor: pointer;
+  display: block;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.profile-btn-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ---- SEARCH ---- */
+
+.search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.search-toggle-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.search-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.search-input {
+  width: 0;
+  padding: 0;
+  opacity: 0;
+  border: none;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  font-size: 15px;
+  outline: none;
+  transition: width 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+  pointer-events: none;
+}
+
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.search-wrapper.active .search-input {
+  width: 200px;
+  padding: 8px 16px;
+  opacity: 1;
+  pointer-events: all;
+}
+
+.search-results {
+  display: none;
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  width: 280px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  z-index: 999;
+}
+
+.search-results.visible {
+  display: block;
+}
+
+.search-result-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  gap: 10px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+.search-result-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex: 1;
+  min-width: 0;
+}
+
+.search-result-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.search-result-username {
+  font-size: 14px;
+  font-weight: bold;
+  color: #1d3557;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.search-no-results {
+  padding: 16px;
+  text-align: center;
+  color: #888;
+  font-size: 14px;
+}
+
+.follow-btn {
+  padding: 6px 14px;
+  border: 2px solid #38627c;
+  border-radius: 20px;
+  background: transparent;
+  color: #38627c;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: 0.2s;
+  flex-shrink: 0;
+}
+
+.follow-btn:hover {
+  background: #38627c;
+  color: white;
+}
+
+.follow-btn.following {
+  background: #38627c;
+  color: white;
+}
+
+.follow-btn.following:hover {
+  background: #c0392b;
+  border-color: #c0392b;
+  color: white;
+}
+
+/* ---- FEED ---- */
+
+.feed-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 32px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Post composer */
+.post-composer {
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.composer-top {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.composer-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.post-composer textarea {
+  flex: 1;
+  border: none;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 14px;
+  padding: 12px 14px;
+  font-size: 15px;
+  font-family: Arial, sans-serif;
+  resize: none;
+  outline: none;
+  color: #1d3557;
+  min-height: 44px;
+  overflow: hidden;
+}
+
+.post-composer textarea::placeholder {
+  color: #6a9ab8;
+}
+
+.composer-image-preview {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.composer-image-preview img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  display: block;
+  border-radius: 14px;
+}
+
+.remove-image-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.55);
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.composer-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.attach-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 12px;
+  transition: background 0.2s;
+}
+
+.attach-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.post-submit-btn {
+  padding: 10px 26px;
+  border: none;
+  border-radius: 14px;
+  background: white;
+  color: #38627c;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.post-submit-btn:hover {
+  background: #e4eef5;
+}
+
+.post-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* Post cards */
+.post-card {
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.post-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.post-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.post-username {
+  font-weight: bold;
+  color: white;
+  font-size: 15px;
+}
+
+.post-time {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 12px;
+}
+
+.post-content {
+  color: white;
+  font-size: 15px;
+  line-height: 1.5;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.post-image {
+  width: 100%;
+  border-radius: 14px;
+  object-fit: cover;
+  max-height: 400px;
+  display: block;
+}
+
+.post-actions {
+  display: flex;
+  gap: 16px;
+  padding-top: 4px;
+}
+
+.like-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 10px;
+  transition: 0.2s;
+}
+
+.like-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.like-btn.liked {
+  color: #e05c7a;
+}
+
+.feed-loading,
+.feed-empty {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 40px 0;
+  font-size: 15px;
+}
+
+/* ---- FLOATING ACTION BUTTON ---- */
+
+.fab {
+  position: fixed;
+  bottom: 36px;
+  right: 36px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #38627c;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s, background 0.2s;
+  z-index: 900;
+}
+
+.fab:hover {
+  background-color: #2f5469;
+  transform: scale(1.08);
+}
+
+/* ---- POST MODAL ---- */
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.post-modal {
+  background: #38627c;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 520px;
+  margin: 16px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.modal-header h2 {
+  color: white;
+  font-size: 18px;
+  margin: 0;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 18px;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.modal-close-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+}
+
+.modal-body {
+  padding: 18px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.composer-top {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.composer-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.post-modal textarea {
+  flex: 1;
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  padding: 12px 14px;
+  font-size: 15px;
+  font-family: Arial, sans-serif;
+  resize: none;
+  outline: none;
+  color: white;
+  min-height: 80px;
+}
+
+.post-modal textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.composer-image-preview {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.composer-image-preview img {
+  width: 100%;
+  max-height: 260px;
+  object-fit: cover;
+  display: block;
+  border-radius: 14px;
+}
+
+.remove-image-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.55);
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 22px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.attach-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 12px;
+  transition: background 0.2s;
+}
+
+.attach-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.post-submit-btn {
+  padding: 10px 28px;
+  border: none;
+  border-radius: 14px;
+  background: white;
+  color: #38627c;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.post-submit-btn:hover {
+  background: #e4eef5;
+}
+
+.post-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
 }
