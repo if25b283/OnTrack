@@ -678,6 +678,10 @@ main {
   gap: 16px;
 }
 
+.post-card + .post-card {
+  margin-top: 16px;
+}
+
 /* Post composer */
 .post-composer {
   background: rgba(255, 255, 255, 0.18);
