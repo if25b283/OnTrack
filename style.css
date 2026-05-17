@@ -678,8 +678,10 @@ main {
   gap: 16px;
 }
 
-.post-card + .post-card {
-  margin-top: 16px;
+#feed-posts {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 /* Post composer */
