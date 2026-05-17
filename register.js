@@ -25,26 +25,6 @@ form.addEventListener("submit", async (event) => {
 
         if (error) throw error;
 
-        const user = data.user;
-
-        if (!user) {
-            message.textContent = "Please check your email to confirm your account.";
-            return;
-        }
-
-        const { error: profileError } = await supabase
-            .from("users")
-            .insert([
-                {
-                    id: user.id,
-                    username: username,
-                    email: email,
-                    profile_image: null
-                }
-            ]);
-
-        if (profileError) throw profileError;
-
         message.textContent = "Registration successful!";
         window.location.href = "feed.html";
 
