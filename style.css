@@ -673,11 +673,9 @@ main {
   max-width: 600px;
   margin: 0 auto;
   padding: 16px;
-  /* war 32px 16px */
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  /* war 20px */
+  gap: 16px;
 }
 
 /* Post composer */
