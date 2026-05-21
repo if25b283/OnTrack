@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OnTrack Calendar</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="calendar-page">
+
+  <main class="calendar-main">
+
+    <section class="calendar-wrapper">
+
+      <div class="calendar-header">
+        <button id="prevMonth">‹</button>
+        <h1 id="calendarTitle"></h1>
+        <button id="nextMonth">›</button>
+      </div>
+
+      <div class="weekdays">
+        <div>MONDAY</div>
+        <div>TUESDAY</div>
+        <div>WEDNESDAY</div>
+        <div>THURSDAY</div>
+        <div>FRIDAY</div>
+        <div>SATURDAY</div>
+        <div>SUNDAY</div>
+      </div>
+
+      <div class="calendar-grid" id="calendarGrid"></div>
+    </section>
+
+    <div id="eventModal" class="event-modal">
+      <div class="event-box">
+        <h2>Termin hinzufügen</h2>
+
+        <label for="eventTitle">Titel:</label>
+        <input type="text" id="eventTitle" placeholder="z.B. Mathe lernen">
+
+        <label for="eventDate">Datum:</label>
+        <input type="date" id="eventDate">
+
+        <div class="event-buttons">
+          <button id="saveEvent">Speichern</button>
+          <button id="closeModal" class="cancel-btn">Abbrechen</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="calendar.js"></script>
+  <script type="module" src="header.js"></script>
+</body>
+</html>
