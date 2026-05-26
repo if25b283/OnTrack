@@ -144,14 +144,16 @@ async function loadFeed() {
         return;
     }
 
-    feedEl.innerHTML = posts.map(post => renderPost(post)).join("");
+    const followingSet = new Set((following || []).map(f => f.followed_id));
+
+    feedEl.innerHTML = posts.map(post => renderPost(post, followingSet)).join("");
 
     feedEl.querySelectorAll(".like-btn").forEach(btn => {
         btn.addEventListener("click", () => toggleLike(btn));
     });
 }
 
-function renderPost(post) {
+function renderPost(post, followingSet = new Set()) {
     const author = post.users;
     const avatar = author?.profile_image || DEFAULT_IMAGE;
     const username = author?.username || "Unknown";
@@ -159,16 +161,19 @@ function renderPost(post) {
     const liked = post.post_likes?.some(l => l.user_id === user.id);
     const time = formatTime(post.created_at);
     const isOwn = author?.id === user.id;
+    const isFollowing = followingSet.has(author?.id);
 
     return `
         <article class="post-card" data-id="${post.post_id}">
             <div class="post-header">
-                <img src="${avatar}" alt="${username}" class="post-avatar">
-                <div class="post-meta">
-                    <span class="post-username">${username}</span>
-                    <span class="post-time">${time}</span>
-                </div>
-                ${!isOwn ? `<button class="post-follow-btn" data-uid="${author?.id}">+ Follow</button>` : ""}
+                <a href="profile.html?id=${author?.id}" class="post-author-link">
+                    <img src="${avatar}" alt="${username}" class="post-avatar">
+                    <div class="post-meta">
+                        <span class="post-username">${username}</span>
+                        <span class="post-time">${time}</span>
+                    </div>
+                </a>
+                ${(!isOwn && !isFollowing) ? `<button class="post-follow-btn" data-uid="${author?.id}">+ Follow</button>` : ""}
             </div>
 
             ${post.image_url ? `<img src="${post.image_url}" alt="Post image" class="post-image">` : ""}
