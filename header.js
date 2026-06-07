@@ -23,7 +23,7 @@ function buildHeader() {
 
     const profileBtn = currentPage !== "profile.html" ? `
             <a href="profile.html" class="profile-btn">
-                <img id="header-profile-img" src="${DEFAULT_IMAGE}" alt="Profile" class="profile-btn-img">
+                <img id="header-profile-img" src="${DEFAULT_PROFILE_IMAGE}" alt="Profile" class="profile-btn-img">
             </a>` : "";
 
     return `
@@ -135,7 +135,7 @@ async function searchUsers(query, currentUser, resultsEl) {
 
     resultsEl.innerHTML = users.map(u => {
         const isFollowing = followingSet.has(u.id);
-        const avatar = u.profile_image || DEFAULT_IMAGE;
+        const avatar = u.profile_image || DEFAULT_PROFILE_IMAGE;
         return `
             <div class="search-result-item">
                 <a href="profile.html?id=${u.id}" class="search-result-info">
