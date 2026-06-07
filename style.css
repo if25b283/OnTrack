@@ -796,6 +796,7 @@ body {
   flex-direction: column;
   align-items: center;
   flex-shrink: 0;
+  background-color: #8faebf;
 }
 
 .profile-image-label {
@@ -966,6 +967,7 @@ body {
   display: flex;
   justify-content: center;
   padding-top: 25px;
+  padding-bottom: 40px;
 }
 
 .calendar-wrapper {

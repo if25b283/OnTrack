@@ -37,7 +37,7 @@ function renderCalendar() {
   let startDay = firstDay.getDay();
   startDay = startDay === 0 ? 6 : startDay - 1;
 
-  const totalCells = 42;
+  const totalCells = Math.ceil((startDay + lastDay.getDate()) / 7) * 7;
 
   for (let i = 0; i < startDay; i++) {
     const emptyDay = document.createElement("div");
