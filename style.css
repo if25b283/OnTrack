@@ -796,7 +796,6 @@ body {
   flex-direction: column;
   align-items: center;
   flex-shrink: 0;
-  background-color: #8faebf;
 }
 
 .profile-image-label {
@@ -967,7 +966,6 @@ body {
   display: flex;
   justify-content: center;
   padding-top: 25px;
-  padding-bottom: 40px;
 }
 
 .calendar-wrapper {
@@ -1168,4 +1166,194 @@ body {
 
 .cancel-btn:hover {
   background: #b7cad8 !important;
+}
+
+/* ===== EDIT PROFILE & POST VIEW ===== */
+
+.profile-username-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.profile-username-row h1 {
+  margin: 0;
+}
+
+.edit-profile-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 7px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.edit-profile-btn:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.edit-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.edit-field label {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.edit-field input {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  font-size: 14px;
+  outline: none;
+}
+
+.edit-field input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.edit-field input:focus {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.edit-image-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.edit-avatar-preview {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  background-color: #8faebf;
+}
+
+.edit-image-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.edit-upload-btn {
+  padding: 7px 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-align: center;
+}
+
+.edit-upload-btn:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.edit-remove-btn {
+  padding: 7px 16px;
+  border-radius: 12px;
+  background: rgba(220, 60, 60, 0.3);
+  border: none;
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.edit-remove-btn:hover {
+  background: rgba(220, 60, 60, 0.55);
+}
+
+.edit-message {
+  color: #ffaaaa;
+  font-size: 13px;
+  min-height: 16px;
+  margin: 0;
+}
+
+/* Post view modal */
+.post-view-box {
+  background: #38627c;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 520px;
+  margin: 16px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+}
+
+.post-view-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.4) !important;
+  color: white !important;
+}
+
+.post-view-img {
+  width: 100%;
+  max-height: 460px;
+  object-fit: cover;
+  display: block;
+}
+
+.post-view-text {
+  color: white;
+  font-size: 15px;
+  line-height: 1.6;
+  padding: 16px 20px;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.delete-post-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 20px 16px;
+  padding: 9px 18px;
+  border: none;
+  border-radius: 12px;
+  background: rgba(220, 60, 60, 0.3);
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.delete-post-btn:hover {
+  background: rgba(220, 60, 60, 0.55);
+}
+
+.post-box {
+  cursor: pointer;
+}
+
+.post-box:hover {
+  opacity: 0.85;
+  transition: opacity 0.2s;
 }
