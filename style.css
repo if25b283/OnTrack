@@ -1357,3 +1357,106 @@ body {
   opacity: 0.85;
   transition: opacity 0.2s;
 }
+
+/* ===== TIMER PAGE ===== */
+.timer-page {
+  min-height: 100vh;
+  background-color: #74a1bc;
+}
+
+.timer-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.timer-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.timer-mode-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.timer-mode-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  color: white;
+  border-radius: 20px;
+  padding: 10px 22px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.timer-mode-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.timer-mode-btn.active {
+  background: rgba(255, 255, 255, 0.35);
+  border-color: white;
+}
+
+.timer-display {
+  font-size: 7rem;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 4px;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  font-family: monospace;
+}
+
+.timer-controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.timer-ctrl-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s;
+}
+
+.timer-ctrl-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: white;
+}
+
+.timer-start-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: white;
+  color: #38627c;
+  border: none;
+  border-radius: 30px;
+  padding: 14px 36px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.timer-start-btn:hover {
+  background: #e4eef5;
+  transform: scale(1.04);
+}
