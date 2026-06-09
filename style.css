@@ -1699,8 +1699,19 @@ body {
 }
 
 /* ===== CALENDAR UPDATES ===== */
+/* Fix cell height - never grow */
 .day {
-  overflow: hidden;
+  height: 105px !important;
+  overflow: hidden !important;
+  display: flex;
+  flex-direction: column;
+}
+
+.day-number {
+  font-weight: bold;
+  font-size: 13px;
+  flex-shrink: 0;
+  margin-bottom: 2px;
 }
 
 .clickable-day {
@@ -1711,35 +1722,30 @@ body {
   background: rgba(255, 255, 255, 0.08);
 }
 
-.day-number {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 4px;
-}
-
 .today {
   background: rgba(255, 255, 255, 0.15) !important;
 }
 
+/* Calendar entries - single line, truncated */
 .cal-entry {
   font-size: 11px;
   padding: 2px 6px;
-  border-radius: 8px;
+  border-radius: 6px;
   margin-bottom: 2px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 90%;
+  flex-shrink: 0;
 }
 
 .cal-entry.event {
-  background: rgba(56, 98, 124, 0.7);
-  color: white;
+  background: rgba(232, 240, 255, 0.9);
+  color: #12385a;
 }
 
 .cal-entry.task {
-  background: rgba(224, 92, 122, 0.6);
-  color: white;
+  background: rgba(224, 92, 122, 0.25);
+  color: #12385a;
 }
 
 .cal-entry.task.done {
@@ -1749,8 +1755,15 @@ body {
 
 .cal-more {
   font-size: 10px;
-  color: rgba(255, 255, 255, 0.7);
-  padding-left: 4px;
+  color: rgba(255, 255, 255, 0.6);
+  padding-left: 2px;
+  flex-shrink: 0;
+}
+
+/* Keep + button at bottom */
+.add-event {
+  margin-top: auto !important;
+  flex-shrink: 0;
 }
 
 /* Day detail modal */
