@@ -1408,12 +1408,13 @@ body {
 }
 
 .timer-display {
-  font-size: 10rem;
+  font-size: 8rem;
   font-weight: 700;
   color: white;
   letter-spacing: 6px;
   text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  font-family: monospace;
+  font-family: Arial, sans-serif;
+  font-variant-numeric: tabular-nums;
 }
 
 .timer-controls {
