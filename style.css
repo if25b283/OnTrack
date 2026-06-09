@@ -1697,3 +1697,118 @@ body {
   padding: 40px 0;
   font-size: 15px;
 }
+
+/* ===== CALENDAR UPDATES ===== */
+.day {
+  overflow: hidden;
+}
+
+.clickable-day {
+  cursor: pointer;
+}
+
+.clickable-day:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.day-number {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.today {
+  background: rgba(255, 255, 255, 0.15) !important;
+}
+
+.cal-entry {
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 8px;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 90%;
+}
+
+.cal-entry.event {
+  background: rgba(56, 98, 124, 0.7);
+  color: white;
+}
+
+.cal-entry.task {
+  background: rgba(224, 92, 122, 0.6);
+  color: white;
+}
+
+.cal-entry.task.done {
+  opacity: 0.5;
+  text-decoration: line-through;
+}
+
+.cal-more {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.7);
+  padding-left: 4px;
+}
+
+/* Day detail modal */
+.day-entry-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 10px 14px;
+  color: white;
+  font-size: 14px;
+}
+
+.day-entry-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.day-entry-dot.event {
+  background: #7bb8d4;
+}
+
+.day-entry-dot.task {
+  background: #e05c7a;
+}
+
+.day-entry-dot.task.done {
+  background: #888;
+}
+
+.day-entry-item span:nth-child(2) {
+  flex: 1;
+}
+
+.day-entry-tag {
+  font-size: 11px;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 2px 8px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.day-entry-delete {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  transition: 0.2s;
+  flex-shrink: 0;
+}
+
+.day-entry-delete:hover {
+  background: rgba(220, 60, 60, 0.3);
+  color: white;
+}

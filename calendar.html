@@ -13,7 +13,6 @@
   <div id="main-header"></div>
 
   <main class="calendar-main">
-
     <section class="calendar-wrapper">
 
       <div class="calendar-header">
@@ -34,28 +33,41 @@
 
       <div class="calendar-grid" id="calendarGrid"></div>
     </section>
-
-    <div id="eventModal" class="event-modal">
-      <div class="event-box">
-        <h2>Termin hinzufügen</h2>
-
-        <label for="eventTitle">Titel:</label>
-        <input type="text" id="eventTitle" placeholder="z.B. Mathe lernen">
-
-        <label for="eventDate">Datum:</label>
-        <input type="date" id="eventDate">
-
-        <div class="event-buttons">
-          <button id="saveEvent">Speichern</button>
-          <button id="closeModal" class="cancel-btn">Abbrechen</button>
-        </div>
-      </div>
-    </div>
-
   </main>
 
-  <script src="calendar.js"></script>
+  <!-- Add Event Modal -->
+  <div class="event-modal" id="eventModal">
+    <div class="event-box">
+      <h2>Add Event</h2>
+      <label for="eventTitle">Title</label>
+      <input type="text" id="eventTitle" placeholder="e.g. Study session">
+      <label for="eventDate">Date</label>
+      <input type="date" id="eventDate">
+      <div class="event-buttons">
+        <button id="saveEvent">Save</button>
+        <button id="closeModal" class="cancel-btn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day Detail Modal -->
+  <div class="modal-overlay" id="day-modal">
+    <div class="post-modal" style="max-width:460px;">
+      <div class="modal-header">
+        <h2 id="day-modal-title">Monday, 1 Jan</h2>
+        <button class="modal-close-btn" id="close-day-modal">✕</button>
+      </div>
+      <div class="modal-body" id="day-modal-body" style="gap:10px; max-height:60vh; overflow-y:auto;">
+      </div>
+      <div class="modal-footer">
+        <span></span>
+        <button class="post-submit-btn" id="day-add-event-btn">+ Add Event</button>
+      </div>
+    </div>
+  </div>
+
   <script type="module" src="header.js"></script>
+  <script type="module" src="calendar.js"></script>
 </body>
 
 </html>
