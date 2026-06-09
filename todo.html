@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnTrack - To-Do</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="todo-page">
+
+    <div id="main-header"></div>
+
+    <main class="page-main todo-main">
+        <div class="todo-container">
+
+            <div class="todo-header">
+                <h2 class="todo-title">My To-Do's</h2>
+                <div class="todo-header-actions">
+                    <select class="todo-sort-select" id="sort-select">
+                        <option value="newest">▼ Newest</option>
+                        <option value="oldest">▲ Oldest</option>
+                        <option value="due">⏰ Due Date</option>
+                    </select>
+                    <button class="todo-add-btn" id="open-add-modal">+ Add</button>
+                </div>
+            </div>
+
+            <div class="todo-list" id="todo-list">
+                <div class="todo-loading">Loading tasks…</div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Add Task Modal -->
+    <div class="modal-overlay" id="add-task-modal">
+        <div class="post-modal" style="max-width: 440px;">
+            <div class="modal-header">
+                <h2>New Task</h2>
+                <button class="modal-close-btn" id="close-add-modal">✕</button>
+            </div>
+            <div class="modal-body" style="gap:14px;">
+                <div class="edit-field">
+                    <label>Title</label>
+                    <input type="text" id="task-title-input" placeholder="What do you need to do?">
+                </div>
+                <div class="edit-field">
+                    <label>Due Date (optional)</label>
+                    <input type="date" id="task-due-input">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <span></span>
+                <button class="post-submit-btn" id="save-task-btn">Add Task</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirm Modal -->
+    <div class="modal-overlay" id="delete-task-modal">
+        <div class="post-modal" style="max-width: 380px;">
+            <div class="modal-header">
+                <h2>Delete Task</h2>
+                <button class="modal-close-btn" id="close-delete-modal">✕</button>
+            </div>
+            <div class="modal-body">
+                <p style="color:white; margin:0;">Are you sure you want to delete this task?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="post-submit-btn" id="confirm-delete-btn"
+                    style="background:#e05c5c; color:white;">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="header.js"></script>
+    <script type="module" src="todo.js"></script>
+</body>
+
+</html>
