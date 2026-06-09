@@ -22,7 +22,7 @@ const resetBtn = document.getElementById("resetBtn");
 const settingsBtn = document.getElementById("settingsBtn");
 const studyBtn = document.getElementById("studyBtn");
 const breakBtn = document.getElementById("breakBtn");
-const settingsModal = document.getElementById("settingsModal");
+const settingsPopup = document.getElementById("settingsPopup");
 const closeSettings = document.getElementById("closeSettingsBtn");
 const saveSettings = document.getElementById("saveSettingsBtn");
 const studyInput = document.getElementById("studyTimeInput");
@@ -154,18 +154,18 @@ breakBtn.addEventListener("click", () => setMode("break"));
 settingsBtn.addEventListener("click", () => {
     studyInput.value = studyTime;
     breakInput.value = breakTime;
-    settingsModal.classList.add("active");
+    settingsPopup.classList.add("active");
 });
 
-closeSettings.addEventListener("click", () => settingsModal.classList.remove("active"));
-settingsModal.addEventListener("click", (e) => {
-    if (e.target === settingsModal) settingsModal.classList.remove("active");
+closeSettings.addEventListener("click", () => settingsPopup.classList.remove("active"));
+settingsPopup.addEventListener("click", (e) => {
+    if (e.target === settingsPopup) settingsPopup.classList.remove("active");
 });
 
 saveSettings.addEventListener("click", () => {
     studyTime = parseInt(studyInput.value) || 25;
     breakTime = parseInt(breakInput.value) || 5;
-    settingsModal.classList.remove("active");
+    settingsPopup.classList.remove("active");
     resetTimer();
 });
 
