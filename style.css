@@ -890,6 +890,12 @@ body {
   text-align: center;
   padding: 6px;
   box-sizing: border-box;
+  cursor: pointer;
+}
+
+.post-box:hover {
+  opacity: 0.85;
+  transition: opacity 0.2s;
 }
 
 .image-post img {
@@ -1029,9 +1035,12 @@ body {
   height: 105px;
   border-right: 1px solid black;
   border-bottom: 1px solid black;
-  padding: 18px;
+  padding: 8px 10px;
   position: relative;
   font-weight: bold;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .day:nth-child(7n) {
@@ -1054,6 +1063,7 @@ body {
   font-size: 22px;
   font-weight: bold;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .add-event:hover {
@@ -1347,15 +1357,6 @@ body {
 
 .delete-post-btn:hover {
   background: rgba(220, 60, 60, 0.55);
-}
-
-.post-box {
-  cursor: pointer;
-}
-
-.post-box:hover {
-  opacity: 0.85;
-  transition: opacity 0.2s;
 }
 
 /* ===== TIMER PAGE ===== */
@@ -1699,14 +1700,6 @@ body {
 }
 
 /* ===== CALENDAR UPDATES ===== */
-/* Fix cell height - never grow */
-.day {
-  height: 105px !important;
-  overflow: hidden !important;
-  display: flex;
-  flex-direction: column;
-}
-
 .day-number {
   font-weight: bold;
   font-size: 13px;
@@ -1757,12 +1750,6 @@ body {
   font-size: 10px;
   color: rgba(255, 255, 255, 0.6);
   padding-left: 2px;
-  flex-shrink: 0;
-}
-
-/* Keep + button at bottom */
-.add-event {
-  margin-top: auto !important;
   flex-shrink: 0;
 }
 
