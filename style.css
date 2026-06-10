@@ -890,12 +890,6 @@ body {
   text-align: center;
   padding: 6px;
   box-sizing: border-box;
-  cursor: pointer;
-}
-
-.post-box:hover {
-  opacity: 0.85;
-  transition: opacity 0.2s;
 }
 
 .image-post img {
@@ -1035,12 +1029,9 @@ body {
   height: 105px;
   border-right: 1px solid black;
   border-bottom: 1px solid black;
-  padding: 8px 10px;
+  padding: 18px;
   position: relative;
   font-weight: bold;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
 }
 
 .day:nth-child(7n) {
@@ -1063,7 +1054,6 @@ body {
   font-size: 22px;
   font-weight: bold;
   cursor: pointer;
-  flex-shrink: 0;
 }
 
 .add-event:hover {
@@ -1358,6 +1348,16 @@ body {
 .delete-post-btn:hover {
   background: rgba(220, 60, 60, 0.55);
 }
+
+.post-box {
+  cursor: pointer;
+}
+
+.post-box:hover {
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+
 
 /* ===== TIMER PAGE ===== */
 .timer-page {
@@ -1676,6 +1676,12 @@ body {
   color: #7a8fa0;
 }
 
+.todo-shared-icon {
+  color: #38627c;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
 .todo-due {
   display: flex;
   align-items: center;
@@ -1700,6 +1706,12 @@ body {
 }
 
 /* ===== CALENDAR UPDATES ===== */
+.day {
+  overflow: hidden !important;
+  display: flex;
+  flex-direction: column;
+}
+
 .day-number {
   font-weight: bold;
   font-size: 13px;
@@ -1719,7 +1731,6 @@ body {
   background: rgba(255, 255, 255, 0.15) !important;
 }
 
-/* Calendar entries - single line, truncated */
 .cal-entry {
   font-size: 11px;
   padding: 2px 6px;
@@ -1753,7 +1764,6 @@ body {
   flex-shrink: 0;
 }
 
-/* Day detail modal */
 .day-entry-item {
   display: flex;
   align-items: center;
@@ -1811,4 +1821,396 @@ body {
 .day-entry-delete:hover {
   background: rgba(220, 60, 60, 0.3);
   color: white;
+}
+
+/* ===== GROUPS PAGE ===== */
+.groups-page {
+  min-height: 100vh;
+  background-color: #74a1bc;
+}
+
+.groups-main {
+  display: flex;
+  justify-content: center;
+  padding: 40px 16px;
+}
+
+.groups-container {
+  width: 100%;
+  max-width: 860px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.groups-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.groups-title {
+  color: #12385a;
+  font-size: 22px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.groups-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.group-card {
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: transform 0.2s;
+}
+
+.group-card:hover {
+  transform: translateY(-2px);
+}
+
+.group-card-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  flex-shrink: 0;
+}
+
+.group-card-info {
+  flex: 1;
+}
+
+.group-card-name {
+  display: block;
+  font-weight: bold;
+  color: white;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.group-card-meta {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.group-card-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.group-open-btn {
+  padding: 7px 18px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+  background: transparent;
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.group-open-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: white;
+}
+
+/* Member search */
+.member-search-wrapper {
+  position: relative;
+}
+
+.member-search-results {
+  display: none;
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  z-index: 100;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.member-search-results.visible {
+  display: block;
+}
+
+.member-result-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: background 0.15s;
+  font-size: 14px;
+  color: #1d3557;
+}
+
+.member-result-item:hover {
+  background: #f0f4f8;
+}
+
+.selected-members {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 32px;
+  margin-top: 8px;
+}
+
+.selected-member-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 4px 10px 4px 6px;
+  color: white;
+  font-size: 13px;
+}
+
+.chip-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #8faebf;
+}
+
+.chip-remove {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  font-size: 12px;
+  padding: 0 2px;
+  line-height: 1;
+}
+
+.chip-remove:hover {
+  color: white;
+}
+
+/* Group detail modal */
+.group-detail-box {
+  background: #38627c;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 580px;
+  margin: 16px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-height: 85vh;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+}
+
+.group-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 22px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+}
+
+.group-detail-avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  flex-shrink: 0;
+}
+
+.group-detail-header h2 {
+  color: white;
+  font-size: 18px;
+  margin: 0;
+}
+
+.group-detail-tabs {
+  display: flex;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+}
+
+.group-tab {
+  flex: 1;
+  padding: 12px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: 0.2s;
+}
+
+.group-tab:hover {
+  color: white;
+}
+
+.group-tab.active {
+  color: white;
+  border-bottom-color: white;
+}
+
+.group-tab-content {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.group-tab-content.hidden {
+  display: none;
+}
+
+/* Chat */
+.group-messages {
+  flex: 1;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  min-height: 200px;
+  max-height: 340px;
+}
+
+.group-message {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.group-message.own {
+  flex-direction: row-reverse;
+}
+
+.msg-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  background-color: #8faebf;
+}
+
+.msg-bubble {
+  max-width: 70%;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 16px 16px 16px 4px;
+  padding: 8px 12px;
+}
+
+.group-message.own .msg-bubble {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 16px 16px 4px 16px;
+}
+
+.msg-name {
+  display: block;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 2px;
+}
+
+.msg-bubble p {
+  margin: 0;
+  color: white;
+  font-size: 14px;
+  word-break: break-word;
+}
+
+.msg-time {
+  display: block;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: 4px;
+  text-align: right;
+}
+
+.group-message-input {
+  display: flex;
+  gap: 10px;
+  padding: 12px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+}
+
+.group-message-input input {
+  flex: 1;
+  border: none;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  padding: 10px 16px;
+  font-size: 14px;
+  outline: none;
+}
+
+.group-message-input input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+#send-message-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: white;
+  color: #38627c;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s;
+  flex-shrink: 0;
+}
+
+#send-message-btn:hover {
+  background: #e4eef5;
+}
+
+/* Members & Tasks tab */
+.group-members-list,
+.group-tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+}
+
+.group-member-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  font-size: 14px;
+  padding: 6px 0;
 }

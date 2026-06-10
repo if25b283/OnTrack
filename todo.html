@@ -36,7 +36,7 @@
 
     <!-- Add Task Modal -->
     <div class="modal-overlay" id="add-task-modal">
-        <div class="post-modal" style="max-width: 440px;">
+        <div class="post-modal" style="max-width: 480px;">
             <div class="modal-header">
                 <h2>New Task</h2>
                 <button class="modal-close-btn" id="close-add-modal">✕</button>
@@ -49,6 +49,15 @@
                 <div class="edit-field">
                     <label>Due Date (optional)</label>
                     <input type="date" id="task-due-input">
+                </div>
+                <div class="edit-field">
+                    <label>Assign to (optional)</label>
+                    <div class="member-search-wrapper">
+                        <input type="text" id="assignee-search-input" placeholder="Search by username…"
+                            autocomplete="off">
+                        <div class="member-search-results" id="assignee-search-results"></div>
+                    </div>
+                    <div class="selected-members" id="selected-assignees"></div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -66,11 +75,30 @@
                 <button class="modal-close-btn" id="close-delete-modal">✕</button>
             </div>
             <div class="modal-body">
-                <p style="color:white; margin:0;">Are you sure you want to delete this task?</p>
+                <p style="color:white; margin:0;">Delete this task for everyone?</p>
             </div>
             <div class="modal-footer">
                 <button class="post-submit-btn" id="confirm-delete-btn"
-                    style="background:#e05c5c; color:white;">Delete</button>
+                    style="background:#e05c5c;color:white;">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Task Detail Modal -->
+    <div class="modal-overlay" id="task-detail-modal">
+        <div class="post-modal" style="max-width:460px;">
+            <div class="modal-header">
+                <h2 id="task-detail-title">Task</h2>
+                <button class="modal-close-btn" id="close-task-detail">✕</button>
+            </div>
+            <div class="modal-body" style="gap:12px;" id="task-detail-body"></div>
+            <div class="modal-footer" id="task-detail-footer">
+                <button class="post-submit-btn" id="create-group-from-task-btn"
+                    style="background:rgba(255,255,255,0.2);color:white;display:none;">
+                    👥 Create Group
+                </button>
+                <button class="post-submit-btn" id="delete-task-from-detail-btn"
+                    style="background:#e05c5c;color:white;">Delete</button>
             </div>
         </div>
     </div>

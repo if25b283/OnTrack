@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnTrack - Groups</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="groups-page">
+
+    <div id="main-header"></div>
+
+    <main class="page-main groups-main">
+        <div class="groups-container">
+
+            <div class="groups-header">
+                <h2 class="groups-title">Groups</h2>
+                <button class="todo-add-btn" id="open-create-group">+ Create Group</button>
+            </div>
+
+            <div class="groups-grid" id="groups-grid">
+                <div class="todo-loading">Loading groups…</div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Create Group Modal -->
+    <div class="modal-overlay" id="create-group-modal">
+        <div class="post-modal" style="max-width:460px;">
+            <div class="modal-header">
+                <h2>Create Group</h2>
+                <button class="modal-close-btn" id="close-create-group">✕</button>
+            </div>
+            <div class="modal-body" style="gap:16px;">
+                <div class="edit-field">
+                    <label>Group Name</label>
+                    <input type="text" id="group-name-input" placeholder="e.g. Math Study Group">
+                </div>
+                <div class="edit-field">
+                    <label>Add Members</label>
+                    <div class="member-search-wrapper">
+                        <input type="text" id="member-search-input" placeholder="Search by username…"
+                            autocomplete="off">
+                        <div class="member-search-results" id="member-search-results"></div>
+                    </div>
+                    <div class="selected-members" id="selected-members"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <span></span>
+                <button class="post-submit-btn" id="save-group-btn">Create</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Group Detail Modal -->
+    <div class="modal-overlay" id="group-detail-modal">
+        <div class="group-detail-box">
+            <div class="group-detail-header">
+                <div class="group-detail-avatar" id="group-detail-avatar"></div>
+                <div>
+                    <h2 id="group-detail-name"></h2>
+                    <span id="group-detail-members-count" style="color:rgba(255,255,255,0.7);font-size:13px;"></span>
+                </div>
+                <button class="modal-close-btn" id="close-group-detail" style="margin-left:auto;">✕</button>
+            </div>
+
+            <div class="group-detail-tabs">
+                <button class="group-tab active" data-tab="chat">Chat</button>
+                <button class="group-tab" data-tab="members">Members</button>
+                <button class="group-tab" data-tab="tasks">Tasks</button>
+            </div>
+
+            <!-- Chat Tab -->
+            <div class="group-tab-content" id="tab-chat">
+                <div class="group-messages" id="group-messages"></div>
+                <div class="group-message-input">
+                    <input type="text" id="message-input" placeholder="Write a message…">
+                    <button id="send-message-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="22" y1="2" x2="11" y2="13" />
+                            <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Members Tab -->
+            <div class="group-tab-content hidden" id="tab-members">
+                <div class="group-members-list" id="group-members-list"></div>
+            </div>
+
+            <!-- Tasks Tab -->
+            <div class="group-tab-content hidden" id="tab-tasks">
+                <div class="group-tasks-list" id="group-tasks-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="header.js"></script>
+    <script type="module" src="groups.js"></script>
+</body>
+
+</html>
