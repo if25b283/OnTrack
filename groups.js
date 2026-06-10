@@ -193,6 +193,8 @@ saveGroupBtn.addEventListener("click", async () => {
     }).select().single();
 
     if (error || !group) {
+        console.error("Group creation error:", error);
+        alert("Could not create group: " + (error?.message || "Unknown error"));
         saveGroupBtn.disabled = false;
         saveGroupBtn.textContent = "Create";
         return;

@@ -172,8 +172,22 @@ async function openTaskDetail(taskId) {
     currentDetailId = taskId;
     const { data: task } = await supabase.from("tasks").select("*").eq("task_id", taskId).single();
     const { data: taskAssignees } = await supabase.from("task_assignees")
-        .select("*, users!task_assignees_user_id_fkey(id, username, profile_image)")
+        .select("task_id, user_id")
         .eq("task_id", taskId);
+
+    // Get user info for each assignee
+    const assigneeUserIds = (taskAssignees || []).map(a => a.user_id);
+    let assigneeUsers = [];
+    if (assigneeUserIds.length) {
+        const { data: users } = await supabase.from("users")
+            .select("id, username, profile_image")
+            .in("id", assigneeUserIds);
+        assigneeUsers = users || [];
+    }
+    const taskAssigneesWithUsers = (taskAssignees || []).map(a => ({
+        ...a,
+        users: assigneeUsers.find(u => u.id === a.user_id) || null
+    }));
 
     taskDetailTitle.textContent = task.title;
 
@@ -182,9 +196,9 @@ async function openTaskDetail(taskId) {
 
     taskDetailBody.innerHTML = `
         ${due ? `<div class="day-entry-item"><span class="day-entry-dot event"></span><span>${due}</span><span class="day-entry-tag">Due Date</span></div>` : ""}
-        ${taskAssignees?.length ? `
+        ${taskAssigneesWithUsers?.length ? `
             <p style="color:rgba(255,255,255,0.7);font-size:13px;margin:4px 0 4px;">Assigned to:</p>
-            ${taskAssignees.map(a => `
+            ${taskAssigneesWithUsers.map(a => `
                 <div class="group-member-item">
                     <img src="${a.users?.profile_image || DEFAULT_IMAGE}" class="search-result-avatar">
                     <span>${a.users?.username || "Unknown"}</span>
@@ -195,9 +209,9 @@ async function openTaskDetail(taskId) {
     `;
 
     // Show "Create Group" if multiple assignees
-    const otherAssignees = (taskAssignees || []).filter(a => a.user_id !== user.id);
+    const otherAssignees = (taskAssigneesWithUsers || []).filter(a => a.user_id !== user.id);
     createGroupBtn.style.display = otherAssignees.length > 0 ? "block" : "none";
-    createGroupBtn.onclick = () => createGroupFromTask(task, taskAssignees);
+    createGroupBtn.onclick = () => createGroupFromTask(task, taskAssigneesWithUsers);
 
     deleteFromDetail.style.display = isOwn ? "block" : "none";
     deleteFromDetail.onclick = () => {
