@@ -259,7 +259,7 @@ async function loadMessages() {
     if (!currentGroupId) return;
 
     const { data: messages } = await supabase.from("group_messages")
-        .select("*, users!group_messages_user_id_fkey(username, profile_image)")
+        .select("*")
         .eq("group_id", currentGroupId)
         .order("sent_at", { ascending: true });
 
@@ -268,10 +268,17 @@ async function loadMessages() {
         return;
     }
 
+    // Fetch user info for all senders
+    const senderIds = [...new Set(messages.map(m => m.user_id))];
+    const { data: senders } = await supabase.from("users")
+        .select("id, username, profile_image")
+        .in("id", senderIds);
+
     messagesEl.innerHTML = messages.map(m => {
         const isMe = m.user_id === user.id;
-        const avatar = m.users?.profile_image || DEFAULT_IMAGE;
-        const name = m.users?.username || "Unknown";
+        const sender = (senders || []).find(s => s.id === m.user_id);
+        const avatar = sender?.profile_image || DEFAULT_IMAGE;
+        const name = sender?.username || "Unknown";
         const time = new Date(m.sent_at).toLocaleTimeString("en", { hour: "2-digit", minute: "2-digit" });
         return `
             <div class="group-message ${isMe ? "own" : ""}">
@@ -302,25 +309,30 @@ async function sendMessage() {
 }
 
 // ---- Members Tab ----
+let currentGroupMemberIds = [];
+
 async function loadGroupMembers(groupId) {
-    const { data } = await supabase.from("group_members")
-        .select("*, users!group_members_user_id_fkey(id, username, profile_image)")
+    const { data: members } = await supabase.from("group_members")
+        .select("user_id")
         .eq("group_id", groupId);
 
-    groupDetailCount.textContent = `${data?.length || 0} member${data?.length !== 1 ? "s" : ""}`;
+    currentGroupMemberIds = (members || []).map(m => m.user_id);
 
-    if (!data?.length) { groupMembersList.innerHTML = ""; return; }
+    groupDetailCount.textContent = `${currentGroupMemberIds.length} member${currentGroupMemberIds.length !== 1 ? "s" : ""}`;
 
-    groupMembersList.innerHTML = data.map(m => {
-        const u = m.users;
-        return `
-            <div class="group-member-item">
-                <img src="${u?.profile_image || DEFAULT_IMAGE}" class="search-result-avatar">
-                <span>${u?.username || "Unknown"}</span>
-                ${u?.id === user.id ? `<span class="day-entry-tag">You</span>` : ""}
-            </div>
-        `;
-    }).join("");
+    if (!currentGroupMemberIds.length) { groupMembersList.innerHTML = ""; return; }
+
+    const { data: users } = await supabase.from("users")
+        .select("id, username, profile_image")
+        .in("id", currentGroupMemberIds);
+
+    groupMembersList.innerHTML = (users || []).map(u => `
+        <div class="group-member-item">
+            <img src="${u.profile_image || DEFAULT_IMAGE}" class="search-result-avatar">
+            <span>${u.username || "Unknown"}</span>
+            ${u.id === user.id ? `<span class="day-entry-tag">You</span>` : ""}
+        </div>
+    `).join("");
 }
 
 // ---- Tasks Tab ----
@@ -329,6 +341,11 @@ async function loadGroupTasks(groupId) {
     const { data: members } = await supabase.from("group_members")
         .select("user_id").eq("group_id", groupId);
     const memberIds = (members || []).map(m => m.user_id);
+
+    if (!memberIds.length) {
+        groupTasksList.innerHTML = `<div style="text-align:center;color:rgba(255,255,255,0.4);padding:20px;">No shared tasks</div>`;
+        return;
+    }
 
     const { data: assignees } = await supabase.from("task_assignees")
         .select("task_id").in("user_id", memberIds);
