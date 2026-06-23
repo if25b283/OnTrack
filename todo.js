@@ -496,14 +496,14 @@ function normalizePriority(priority) {
 
 function priorityLabel(priority) {
     if (priority === "urgent") {
-        return "Dringend";
+        return "High Priority";
     }
 
     if (priority === "low") {
-        return "Nicht so wichtig";
+        return "Low Priority";
     }
 
-    return "Wichtig";
+    return "Medium Priority";
 }
 
 function priorityWeight(priority) {
