@@ -337,33 +337,47 @@ async function loadGroupMembers(groupId) {
 
 // ---- Tasks Tab ----
 async function loadGroupTasks(groupId) {
-    // Show tasks assigned to group members
-    const { data: members } = await supabase.from("group_members")
-        .select("user_id").eq("group_id", groupId);
-    const memberIds = (members || []).map(m => m.user_id);
+    const { data: tasks, error } = await supabase
+        .from("tasks")
+        .select("*")
+        .eq("group_id", groupId)
+        .order("created_at", { ascending: false });
 
-    if (!memberIds.length) {
-        groupTasksList.innerHTML = `<div style="text-align:center;color:rgba(255,255,255,0.4);padding:20px;">No shared tasks</div>`;
+    if (error) {
+        console.error(error);
+        groupTasksList.innerHTML = `
+            <div style="text-align:center;color:rgba(255,255,255,0.4);padding:20px;">
+                Could not load group tasks
+            </div>
+        `;
         return;
     }
 
-    const { data: assignees } = await supabase.from("task_assignees")
-        .select("task_id").in("user_id", memberIds);
-    const taskIds = [...new Set((assignees || []).map(a => a.task_id))];
-
-    if (!taskIds.length) {
-        groupTasksList.innerHTML = `<div style="text-align:center;color:rgba(255,255,255,0.4);padding:20px;">No shared tasks</div>`;
+    if (!tasks || tasks.length === 0) {
+        groupTasksList.innerHTML = `
+            <div style="text-align:center;color:rgba(255,255,255,0.4);padding:20px;">
+                No shared tasks
+            </div>
+        `;
         return;
     }
 
-    const { data: tasks } = await supabase.from("tasks")
-        .select("*").in("task_id", taskIds);
-
-    groupTasksList.innerHTML = (tasks || []).map(t => `
+    groupTasksList.innerHTML = tasks.map(t => `
         <div class="day-entry-item">
             <span class="day-entry-dot ${t.status === "done" ? "task done" : "task"}"></span>
-            <span style="${t.status === "done" ? "text-decoration:line-through;opacity:0.6;" : ""}">${escapeHtml(t.title)}</span>
-            ${t.due_date ? `<span class="day-entry-tag">${new Date(t.due_date).toLocaleDateString("en", { month: "short", day: "numeric" })}</span>` : ""}
+
+            <span style="${t.status === "done" ? "text-decoration:line-through;opacity:0.6;" : ""}">
+                ${escapeHtml(t.title)}
+            </span>
+
+            ${t.due_date ? `
+                <span class="day-entry-tag">
+                    ${new Date(t.due_date).toLocaleDateString("en", {
+        month: "short",
+        day: "numeric"
+    })}
+                </span>
+            ` : ""}
         </div>
     `).join("");
 }

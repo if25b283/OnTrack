@@ -485,6 +485,13 @@ async function createGroupFromTask(task, taskAssignees) {
         .from("group_members")
         .insert(members);
 
+    await supabase
+        .from("tasks")
+        .update({
+            group_id: group.group_id
+        })
+        .eq("task_id", task.task_id);
+
     closeModal(taskDetailModal);
     alert(`Group "${groupName}" created! Go to Groups to see it.`);
 }
