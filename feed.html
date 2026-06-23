@@ -20,7 +20,6 @@
         </div>
     </main>
 
-    <!-- Floating + Button -->
     <button class="fab" id="open-composer" aria-label="Create post">
         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -29,7 +28,6 @@
         </svg>
     </button>
 
-    <!-- Post Modal -->
     <div class="modal-overlay" id="modal-overlay">
         <div class="post-modal">
             <div class="modal-header">
@@ -62,6 +60,17 @@
                 <input type="file" id="post-image-input" accept="image/*" hidden>
                 <button class="post-submit-btn" id="post-submit">Post</button>
             </div>
+        </div>
+    </div>
+
+    <div id="editPostModal" class="edit-modal">
+        <div class="edit-modal-box">
+            <div class="edit-modal-header">
+                <button id="cancelEditPost" class="edit-close-btn">✕</button>
+                <h2>Post bearbeiten</h2>
+                <button id="saveEditPost" class="edit-save-text-btn">Speichern</button>
+            </div>
+            <textarea id="editPostText" placeholder="Was möchtest du ändern?"></textarea>
         </div>
     </div>
 

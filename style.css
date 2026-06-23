@@ -2214,3 +2214,252 @@ body {
   font-size: 14px;
   padding: 6px 0;
 }
+
+/* ===== FEED POST MENU / COMMENTS / EDIT MODAL ===== */
+.post-card .post-header {
+  position: relative;
+}
+
+.post-menu-wrapper {
+  position: relative;
+  margin-left: auto;
+}
+
+.post-menu-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 50%;
+}
+
+.post-menu-btn:hover {
+  background-color: rgba(255, 255, 255, 0.18);
+}
+
+.post-menu {
+  display: none;
+  position: absolute;
+  top: 38px;
+  right: 0;
+  width: 170px;
+  background-color: #ffffff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+  z-index: 50;
+}
+
+.post-menu.open {
+  display: flex;
+  flex-direction: column;
+}
+
+.post-menu button {
+  background: white;
+  border: none;
+  padding: 15px 18px;
+  font-size: 15px;
+  color: #12385a;
+  text-align: left;
+  cursor: pointer;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.post-menu button:last-child {
+  border-bottom: none;
+}
+
+.post-menu button:hover {
+  background-color: #f1f5f8;
+}
+
+.post-menu .delete-post-btn {
+  color: #d62929 !important;
+  font-weight: bold;
+}
+
+.post-image-wrapper {
+  width: 100%;
+}
+
+.post-image {
+  width: 100%;
+  max-height: 520px;
+  object-fit: cover;
+  display: block;
+}
+
+.comments-section {
+  padding: 12px 18px 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.no-comments {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.65);
+  margin-bottom: 10px;
+}
+
+.comment {
+  display: flex;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.16);
+  padding: 9px 12px;
+  border-radius: 14px;
+  margin-bottom: 8px;
+  color: white;
+  font-size: 14px;
+}
+
+.comment-user {
+  font-weight: bold;
+  color: white;
+}
+
+.comment-text {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.comment-form {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.comment-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  border-radius: 22px;
+  padding: 12px 15px;
+  font-size: 14px;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #12385a;
+}
+
+.comment-send-btn {
+  border: none;
+  border-radius: 22px;
+  background-color: #38627c;
+  color: white;
+  padding: 0 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.comment-send-btn:hover {
+  background-color: #2f5269;
+}
+
+.comment-toggle-btn {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+
+.comment-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.heart-icon {
+  font-size: 20px;
+}
+
+.edit-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.edit-modal.active {
+  display: flex;
+}
+
+.edit-modal-box {
+  width: 520px;
+  max-width: calc(100vw - 32px);
+  background: #ffffff;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.32);
+  animation: modalPop 0.2s ease;
+}
+
+@keyframes modalPop {
+  from {
+    transform: scale(0.94);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.edit-modal-header {
+  height: 58px;
+  display: grid;
+  grid-template-columns: 90px 1fr 90px;
+  align-items: center;
+  border-bottom: 1px solid #edf0f3;
+  padding: 0 14px;
+}
+
+.edit-modal-header h2 {
+  margin: 0;
+  color: #12385a;
+  font-size: 18px;
+  text-align: center;
+}
+
+.edit-close-btn {
+  justify-self: start;
+  background: transparent;
+  border: none;
+  color: #12385a;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.edit-save-text-btn {
+  justify-self: end;
+  background: transparent;
+  border: none;
+  color: #38627c;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.edit-save-text-btn:hover {
+  color: #2f5269;
+}
+
+.edit-modal-box textarea {
+  width: 100%;
+  min-height: 180px;
+  border: none;
+  resize: vertical;
+  outline: none;
+  padding: 18px;
+  font-size: 15px;
+  font-family: Arial, sans-serif;
+  color: #12385a;
+}
+
+.edit-modal-box textarea::placeholder {
+  color: #8aa2b2;
+}
