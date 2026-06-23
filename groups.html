@@ -65,7 +65,8 @@
                     <h2 id="group-detail-name"></h2>
                     <span id="group-detail-members-count" style="color:rgba(255,255,255,0.7);font-size:13px;"></span>
                 </div>
-                <button class="modal-close-btn" id="close-group-detail" style="margin-left:auto;">✕</button>
+                <button class="group-edit-btn" id="open-edit-group-btn" style="margin-left:auto;">Edit</button>
+                <button class="modal-close-btn" id="close-group-detail">✕</button>
             </div>
 
             <div class="group-detail-tabs">
@@ -97,6 +98,42 @@
             <!-- Tasks Tab -->
             <div class="group-tab-content hidden" id="tab-tasks">
                 <div class="group-tasks-list" id="group-tasks-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Group Modal -->
+    <div class="modal-overlay" id="edit-group-modal">
+        <div class="post-modal" style="max-width:460px;">
+            <div class="modal-header">
+                <h2>Edit Group</h2>
+                <button class="modal-close-btn" id="close-edit-group">✕</button>
+            </div>
+
+            <div class="modal-body" style="gap:16px;">
+                <div class="edit-field">
+                    <label>Group Name</label>
+                    <input type="text" id="edit-group-name-input" placeholder="Group name">
+                </div>
+
+                <div class="edit-field">
+                    <label>Add Members</label>
+                    <div class="member-search-wrapper">
+                        <input type="text" id="edit-member-search-input" placeholder="Search by username…"
+                            autocomplete="off">
+                        <div class="member-search-results" id="edit-member-search-results"></div>
+                    </div>
+                </div>
+
+                <div class="edit-field">
+                    <label>Current Members</label>
+                    <div class="group-members-list" id="edit-group-members-list"></div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="post-submit-btn delete-confirm-btn" id="delete-group-btn">Delete Group</button>
+                <button class="post-submit-btn" id="save-edit-group-btn">Save</button>
             </div>
         </div>
     </div>

@@ -26,7 +26,17 @@ const messageInput = document.getElementById("message-input");
 const sendBtn = document.getElementById("send-message-btn");
 const groupMembersList = document.getElementById("group-members-list");
 const groupTasksList = document.getElementById("group-tasks-list");
+const openEditGroupBtn = document.getElementById("open-edit-group-btn");
+const editGroupModal = document.getElementById("edit-group-modal");
+const closeEditGroupBtn = document.getElementById("close-edit-group");
+const editGroupNameInput = document.getElementById("edit-group-name-input");
+const editMemberSearchInput = document.getElementById("edit-member-search-input");
+const editMemberSearchResults = document.getElementById("edit-member-search-results");
+const editGroupMembersList = document.getElementById("edit-group-members-list");
+const saveEditGroupBtn = document.getElementById("save-edit-group-btn");
+const deleteGroupBtn = document.getElementById("delete-group-btn");
 
+let currentGroupData = null;
 let selectedMembers = []; // { id, username, profile_image }
 let currentGroupId = null;
 let messageDebounce = null;
@@ -218,6 +228,8 @@ async function openGroupDetail(groupId) {
     const { data: group } = await supabase.from("study_groups")
         .select("*").eq("group_id", groupId).single();
 
+    currentGroupData = group;
+
     const color = groupColor(group.group_name);
     groupDetailAvatar.textContent = groupInitials(group.group_name);
     groupDetailAvatar.style.background = color;
@@ -238,9 +250,14 @@ async function openGroupDetail(groupId) {
 closeDetailBtn.addEventListener("click", () => {
     groupDetailModal.classList.remove("active");
     currentGroupId = null;
+    currentGroupData = null;
 });
 groupDetailModal.addEventListener("click", (e) => {
-    if (e.target === groupDetailModal) { groupDetailModal.classList.remove("active"); currentGroupId = null; }
+    if (e.target === groupDetailModal) {
+        groupDetailModal.classList.remove("active");
+        currentGroupId = null;
+        currentGroupData = null;
+    }
 });
 
 // Tabs
@@ -491,5 +508,259 @@ function escapeHtml(str) {
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;");
 }
+
+openEditGroupBtn.addEventListener("click", async () => {
+    if (!currentGroupId || !currentGroupData) {
+        return;
+    }
+
+    editGroupNameInput.value = currentGroupData.group_name || "";
+    editMemberSearchInput.value = "";
+    editMemberSearchResults.innerHTML = "";
+    editMemberSearchResults.classList.remove("visible");
+
+    await loadEditGroupMembers();
+
+    editGroupModal.classList.add("active");
+});
+
+closeEditGroupBtn.addEventListener("click", () => {
+    editGroupModal.classList.remove("active");
+});
+
+editGroupModal.addEventListener("click", (e) => {
+    if (e.target === editGroupModal) {
+        editGroupModal.classList.remove("active");
+    }
+});
+
+async function loadEditGroupMembers() {
+    const { data: members, error } = await supabase
+        .from("group_members")
+        .select("user_id")
+        .eq("group_id", currentGroupId);
+
+    if (error) {
+        console.error(error);
+        editGroupMembersList.innerHTML = `<p class="follow-empty-text">Could not load members.</p>`;
+        return;
+    }
+
+    const ids = (members || []).map(m => m.user_id);
+
+    if (ids.length === 0) {
+        editGroupMembersList.innerHTML = `<p class="follow-empty-text">No members.</p>`;
+        return;
+    }
+
+    const { data: users, error: usersError } = await supabase
+        .from("users")
+        .select("id, username, profile_image")
+        .in("id", ids);
+
+    if (usersError) {
+        console.error(usersError);
+        editGroupMembersList.innerHTML = `<p class="follow-empty-text">Could not load users.</p>`;
+        return;
+    }
+
+    editGroupMembersList.innerHTML = (users || []).map(member => `
+        <div class="edit-group-member-row">
+            <div class="group-member-item">
+                <img src="${member.profile_image || DEFAULT_IMAGE}" class="search-result-avatar">
+                <span>${escapeHtml(member.username || "Unknown")}</span>
+                ${member.id === user.id ? `<span class="day-entry-tag">You</span>` : ""}
+            </div>
+
+            ${member.id !== user.id ? `
+                <button class="remove-group-member-btn" data-id="${member.id}">
+                    Remove
+                </button>
+            ` : ""}
+        </div>
+    `).join("");
+
+    editGroupMembersList.querySelectorAll(".remove-group-member-btn").forEach(btn => {
+        btn.addEventListener("click", async () => {
+            const memberId = btn.dataset.id;
+
+            const confirmRemove = confirm("Remove this member from the group?");
+            if (!confirmRemove) {
+                return;
+            }
+
+            const { error } = await supabase
+                .from("group_members")
+                .delete()
+                .eq("group_id", currentGroupId)
+                .eq("user_id", memberId);
+
+            if (error) {
+                console.error(error);
+                alert("Member konnte nicht entfernt werden.");
+                return;
+            }
+
+            await loadEditGroupMembers();
+            await loadGroupMembers(currentGroupId);
+            await loadGroupTasks(currentGroupId);
+            await loadGroups();
+        });
+    });
+}
+
+let editMemberDebounce;
+
+editMemberSearchInput.addEventListener("input", () => {
+    clearTimeout(editMemberDebounce);
+
+    const q = editMemberSearchInput.value.trim();
+
+    if (!q) {
+        editMemberSearchResults.innerHTML = "";
+        editMemberSearchResults.classList.remove("visible");
+        return;
+    }
+
+    editMemberDebounce = setTimeout(() => {
+        searchEditMembers(q);
+    }, 300);
+});
+
+async function searchEditMembers(q) {
+    const { data, error } = await supabase
+        .from("users")
+        .select("id, username, profile_image")
+        .ilike("username", `%${q}%`)
+        .neq("id", user.id)
+        .limit(5);
+
+    if (error || !data || data.length === 0) {
+        editMemberSearchResults.innerHTML = `<div class="search-no-results">No users found</div>`;
+        editMemberSearchResults.classList.add("visible");
+        return;
+    }
+
+    editMemberSearchResults.innerHTML = data.map(u => `
+        <div class="member-result-item" data-id="${u.id}" data-username="${escapeHtml(u.username || "Unknown")}">
+            <img src="${u.profile_image || DEFAULT_IMAGE}" class="search-result-avatar">
+            <span>${escapeHtml(u.username || "Unknown")}</span>
+        </div>
+    `).join("");
+
+    editMemberSearchResults.classList.add("visible");
+
+    editMemberSearchResults.querySelectorAll(".member-result-item").forEach(item => {
+        item.addEventListener("click", async () => {
+            const memberId = item.dataset.id;
+
+            const { error } = await supabase
+                .from("group_members")
+                .insert({
+                    group_id: currentGroupId,
+                    user_id: memberId
+                });
+
+            if (error) {
+                console.error(error);
+                alert("Member konnte nicht hinzugefügt werden. Vielleicht ist diese Person schon in der Gruppe.");
+                return;
+            }
+
+            editMemberSearchInput.value = "";
+            editMemberSearchResults.innerHTML = "";
+            editMemberSearchResults.classList.remove("visible");
+
+            await loadEditGroupMembers();
+            await loadGroupMembers(currentGroupId);
+            await loadGroupTasks(currentGroupId);
+            await loadGroups();
+        });
+    });
+}
+
+saveEditGroupBtn.addEventListener("click", async () => {
+    if (!currentGroupId) {
+        return;
+    }
+
+    const newName = editGroupNameInput.value.trim();
+
+    if (!newName) {
+        alert("Bitte Gruppennamen eingeben.");
+        return;
+    }
+
+    saveEditGroupBtn.disabled = true;
+    saveEditGroupBtn.textContent = "Saving…";
+
+    const { error } = await supabase
+        .from("study_groups")
+        .update({
+            group_name: newName
+        })
+        .eq("group_id", currentGroupId);
+
+    saveEditGroupBtn.disabled = false;
+    saveEditGroupBtn.textContent = "Save";
+
+    if (error) {
+        console.error(error);
+        alert("Gruppe konnte nicht bearbeitet werden.");
+        return;
+    }
+
+    currentGroupData.group_name = newName;
+    groupDetailName.textContent = newName;
+    groupDetailAvatar.textContent = groupInitials(newName);
+    groupDetailAvatar.style.background = groupColor(newName);
+
+    editGroupModal.classList.remove("active");
+    await loadGroups();
+});
+
+deleteGroupBtn.addEventListener("click", async () => {
+    if (!currentGroupId) {
+        return;
+    }
+
+    const confirmDelete = confirm("Do you really want to delete this group?");
+    if (!confirmDelete) {
+        return;
+    }
+
+    await supabase
+        .from("group_messages")
+        .delete()
+        .eq("group_id", currentGroupId);
+
+    await supabase
+        .from("group_members")
+        .delete()
+        .eq("group_id", currentGroupId);
+
+    await supabase
+        .from("tasks")
+        .update({ group_id: null })
+        .eq("group_id", currentGroupId);
+
+    const { error } = await supabase
+        .from("study_groups")
+        .delete()
+        .eq("group_id", currentGroupId);
+
+    if (error) {
+        console.error(error);
+        alert("Gruppe konnte nicht gelöscht werden.");
+        return;
+    }
+
+    editGroupModal.classList.remove("active");
+    groupDetailModal.classList.remove("active");
+    currentGroupId = null;
+    currentGroupData = null;
+
+    await loadGroups();
+});
 
 loadGroups();

@@ -2901,3 +2901,50 @@ body {
 #delete-task-from-detail-btn:hover {
   background: #c94343;
 }
+
+.group-edit-btn {
+  border: none;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.group-edit-btn:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.edit-group-member-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 8px 10px;
+}
+
+.edit-group-member-row .group-member-item {
+  padding: 0;
+  flex: 1;
+}
+
+.remove-group-member-btn {
+  border: none;
+  border-radius: 12px;
+  background: rgba(224, 92, 92, 0.3);
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 7px 12px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.remove-group-member-btn:hover {
+  background: rgba(224, 92, 92, 0.55);
+}
