@@ -2463,3 +2463,62 @@ body {
 .edit-modal-box textarea::placeholder {
   color: #8aa2b2;
 }
+
+/* ===== FOLLOWERS / FOLLOWING POPUP ===== */
+
+.clickable-stat {
+  cursor: pointer;
+  border-radius: 14px;
+  padding: 4px 8px;
+  transition: background 0.2s;
+}
+
+.clickable-stat:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.follow-list-box {
+  max-width: 420px;
+}
+
+.follow-list-body {
+  gap: 8px;
+  max-height: 360px;
+  overflow-y: auto;
+}
+
+.follow-user-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: white;
+  padding: 10px 12px;
+  border-radius: 14px;
+  transition: background 0.2s;
+}
+
+.follow-user-row:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.follow-user-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #8faebf;
+  flex-shrink: 0;
+}
+
+.follow-user-row span {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.follow-empty-text {
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  margin: 10px 0;
+  font-size: 14px;
+}

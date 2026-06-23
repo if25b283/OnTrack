@@ -13,6 +13,14 @@ const logoutBtn = document.getElementById("logout-btn");
 const postsGrid = document.querySelector(".posts-grid");
 const editProfileBtn = document.getElementById("edit-profile-btn");
 
+const followersStat = document.getElementById("followers-stat");
+const followingStat = document.getElementById("following-stat");
+
+const followListModal = document.getElementById("follow-list-modal");
+const closeFollowList = document.getElementById("close-follow-list");
+const followListTitle = document.getElementById("follow-list-title");
+const followListBody = document.getElementById("follow-list-body");
+
 // Edit modal
 const editModal = document.getElementById("edit-modal");
 const closeEditModal = document.getElementById("close-edit-modal");
@@ -43,6 +51,99 @@ let removeImage = false;
 function escapeHtml(str) {
     return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
+
+async function openFollowList(type) {
+    followListBody.innerHTML = `<p class="follow-empty-text">Loading...</p>`;
+
+    if (type === "followers") {
+        followListTitle.textContent = "Followers";
+    } else {
+        followListTitle.textContent = "Following";
+    }
+
+    followListModal.classList.add("active");
+
+    let userIds = [];
+
+    if (type === "followers") {
+        const { data, error } = await supabase
+            .from("followers")
+            .select("follower_id")
+            .eq("followed_id", viewId);
+
+        if (error) {
+            console.error(error);
+            followListBody.innerHTML = `<p class="follow-empty-text">Could not load followers.</p>`;
+            return;
+        }
+
+        userIds = (data || []).map(row => row.follower_id);
+    }
+
+    if (type === "following") {
+        const { data, error } = await supabase
+            .from("followers")
+            .select("followed_id")
+            .eq("follower_id", viewId);
+
+        if (error) {
+            console.error(error);
+            followListBody.innerHTML = `<p class="follow-empty-text">Could not load following.</p>`;
+            return;
+        }
+
+        userIds = (data || []).map(row => row.followed_id);
+    }
+
+    if (userIds.length === 0) {
+        followListBody.innerHTML = `
+            <p class="follow-empty-text">
+                ${type === "followers" ? "No followers yet." : "Not following anyone yet."}
+            </p>
+        `;
+        return;
+    }
+
+    const { data: users, error: usersError } = await supabase
+        .from("users")
+        .select("id, username, profile_image")
+        .in("id", userIds);
+
+    if (usersError) {
+        console.error(usersError);
+        followListBody.innerHTML = `<p class="follow-empty-text">Could not load users.</p>`;
+        return;
+    }
+
+    followListBody.innerHTML = (users || []).map(profile => `
+        <a href="profile.html?id=${profile.id}" class="follow-user-row">
+            <img
+                src="${profile.profile_image || DEFAULT_PROFILE_IMAGE}"
+                alt="${escapeHtml(profile.username || "User")}"
+                class="follow-user-avatar"
+            >
+            <span>${escapeHtml(profile.username || "User")}</span>
+        </a>
+    `).join("");
+}
+
+followersStat.addEventListener("click", () => {
+    openFollowList("followers");
+});
+
+followingStat.addEventListener("click", () => {
+    openFollowList("following");
+});
+
+closeFollowList.addEventListener("click", () => {
+    followListModal.classList.remove("active");
+});
+
+followListModal.addEventListener("click", (e) => {
+    if (e.target === followListModal) {
+        followListModal.classList.remove("active");
+    }
+});
 
 // ---- Load Profile ----
 async function loadProfile() {
