@@ -729,25 +729,9 @@ deleteGroupBtn.addEventListener("click", async () => {
         return;
     }
 
-    await supabase
-        .from("group_messages")
-        .delete()
-        .eq("group_id", currentGroupId);
-
-    await supabase
-        .from("group_members")
-        .delete()
-        .eq("group_id", currentGroupId);
-
-    await supabase
-        .from("tasks")
-        .update({ group_id: null })
-        .eq("group_id", currentGroupId);
-
-    const { error } = await supabase
-        .from("study_groups")
-        .delete()
-        .eq("group_id", currentGroupId);
+    const { error } = await supabase.rpc("delete_group_completely", {
+        group_id_to_delete: currentGroupId
+    });
 
     if (error) {
         console.error(error);
