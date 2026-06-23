@@ -32,7 +32,6 @@ const taskDetailModal = document.getElementById("task-detail-modal");
 const taskDetailTitle = document.getElementById("task-detail-title");
 const taskDetailBody = document.getElementById("task-detail-body");
 const closeDetailBtn = document.getElementById("close-task-detail");
-const createGroupBtn = document.getElementById("create-group-from-task-btn");
 const editFromDetailBtn = document.getElementById("edit-task-from-detail-btn");
 const deleteFromDetail = document.getElementById("delete-task-from-detail-btn");
 
@@ -367,14 +366,6 @@ async function openTaskDetail(taskId) {
         ` : ""}
     `;
 
-    const otherAssignees = taskAssigneesWithUsers.filter(a => a.user_id !== user.id);
-
-    createGroupBtn.style.display = otherAssignees.length > 0 ? "block" : "none";
-
-    createGroupBtn.onclick = () => {
-        createGroupFromTask(task, taskAssigneesWithUsers);
-    };
-
     editFromDetailBtn.style.display = isOwn ? "block" : "none";
 
     editFromDetailBtn.onclick = () => {
@@ -450,51 +441,6 @@ updateTaskBtn.addEventListener("click", async () => {
     closeEditModal();
     loadTasks();
 });
-
-async function createGroupFromTask(task, taskAssignees) {
-    const groupName = `${task.title.slice(0, 30)}${task.title.length > 30 ? "…" : ""}`;
-
-    const { data: group, error } = await supabase
-        .from("study_groups")
-        .insert({
-            group_name: groupName,
-            created_by: user.id
-        })
-        .select()
-        .single();
-
-    if (error || !group) {
-        console.error(error);
-        alert("Gruppe konnte nicht erstellt werden.");
-        return;
-    }
-
-    const members = (taskAssignees || []).map(a => ({
-        group_id: group.group_id,
-        user_id: a.user_id
-    }));
-
-    if (!members.find(m => m.user_id === user.id)) {
-        members.push({
-            group_id: group.group_id,
-            user_id: user.id
-        });
-    }
-
-    await supabase
-        .from("group_members")
-        .insert(members);
-
-    await supabase
-        .from("tasks")
-        .update({
-            group_id: group.group_id
-        })
-        .eq("task_id", task.task_id);
-
-    closeModal(taskDetailModal);
-    alert(`Group "${groupName}" created! Go to Groups to see it.`);
-}
 
 function dueDateLabel(dateStr) {
     if (!dateStr) {
@@ -621,8 +567,6 @@ function renderTasks(tasks, assigneeMap) {
                         ${due.text}
                     </span>
                 ` : ""}
-
-                <button class="todo-edit-btn" data-id="${task.task_id}">Edit</button>
             </div>
         `;
     }).join("");
@@ -631,24 +575,6 @@ function renderTasks(tasks, assigneeMap) {
         btn.addEventListener("click", e => {
             e.stopPropagation();
             toggleDone(parseInt(btn.dataset.id), btn.dataset.status);
-        });
-    });
-
-    todoList.querySelectorAll(".todo-edit-btn").forEach(btn => {
-        btn.addEventListener("click", async e => {
-            e.stopPropagation();
-
-            const taskId = parseInt(btn.dataset.id);
-
-            const { data: task } = await supabase
-                .from("tasks")
-                .select("*")
-                .eq("task_id", taskId)
-                .single();
-
-            if (task) {
-                openEditModal(task);
-            }
         });
     });
 

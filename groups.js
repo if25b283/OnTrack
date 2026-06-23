@@ -337,23 +337,26 @@ async function loadGroupMembers(groupId) {
 
 // ---- Tasks Tab ----
 async function loadGroupTasks(groupId) {
-    const { data: tasks, error } = await supabase
-        .from("tasks")
-        .select("*")
-        .eq("group_id", groupId)
-        .order("created_at", { ascending: false });
+    const { data: members, error: membersError } = await supabase
+        .from("group_members")
+        .select("user_id")
+        .eq("group_id", groupId);
 
-    if (error) {
-        console.error(error);
+    if (membersError) {
+        console.error(membersError);
         groupTasksList.innerHTML = `
             <div style="text-align:center;color:rgba(255,255,255,0.4);padding:20px;">
-                Could not load group tasks
+                Could not load group members
             </div>
         `;
         return;
     }
 
-    if (!tasks || tasks.length === 0) {
+    const groupMemberIds = (members || [])
+        .map(member => member.user_id)
+        .sort();
+
+    if (groupMemberIds.length === 0) {
         groupTasksList.innerHTML = `
             <div style="text-align:center;color:rgba(255,255,255,0.4);padding:20px;">
                 No shared tasks
@@ -362,17 +365,113 @@ async function loadGroupTasks(groupId) {
         return;
     }
 
-    groupTasksList.innerHTML = tasks.map(t => `
-        <div class="day-entry-item">
-            <span class="day-entry-dot ${t.status === "done" ? "task done" : "task"}"></span>
+    const { data: candidateAssignees, error: candidateError } = await supabase
+        .from("task_assignees")
+        .select("task_id")
+        .in("user_id", groupMemberIds);
 
-            <span style="${t.status === "done" ? "text-decoration:line-through;opacity:0.6;" : ""}">
-                ${escapeHtml(t.title)}
+    if (candidateError) {
+        console.error(candidateError);
+        groupTasksList.innerHTML = `
+            <div style="text-align:center;color:rgba(255,255,255,0.4);padding:20px;">
+                Could not load tasks
+            </div>
+        `;
+        return;
+    }
+
+    const candidateTaskIds = [
+        ...new Set((candidateAssignees || []).map(row => row.task_id))
+    ];
+
+    if (candidateTaskIds.length === 0) {
+        groupTasksList.innerHTML = `
+            <div style="text-align:center;color:rgba(255,255,255,0.4);padding:20px;">
+                No shared tasks
+            </div>
+        `;
+        return;
+    }
+
+    const { data: allAssignments, error: assignmentsError } = await supabase
+        .from("task_assignees")
+        .select("task_id, user_id")
+        .in("task_id", candidateTaskIds);
+
+    if (assignmentsError) {
+        console.error(assignmentsError);
+        groupTasksList.innerHTML = `
+            <div style="text-align:center;color:rgba(255,255,255,0.4);padding:20px;">
+                Could not load task assignments
+            </div>
+        `;
+        return;
+    }
+
+    const assignmentsByTask = {};
+
+    (allAssignments || []).forEach(row => {
+        if (!assignmentsByTask[row.task_id]) {
+            assignmentsByTask[row.task_id] = [];
+        }
+
+        assignmentsByTask[row.task_id].push(row.user_id);
+    });
+
+    const matchingTaskIds = Object.entries(assignmentsByTask)
+        .filter(([taskId, assigneeIds]) => {
+            const sortedAssignees = [...assigneeIds].sort();
+
+            if (sortedAssignees.length !== groupMemberIds.length) {
+                return false;
+            }
+
+            return sortedAssignees.every((id, index) => id === groupMemberIds[index]);
+        })
+        .map(([taskId]) => parseInt(taskId));
+
+    if (matchingTaskIds.length === 0) {
+        groupTasksList.innerHTML = `
+            <div style="text-align:center;color:rgba(255,255,255,0.4);padding:20px;">
+                No shared tasks
+            </div>
+        `;
+        return;
+    }
+
+    const { data: tasks, error: tasksError } = await supabase
+        .from("tasks")
+        .select("*")
+        .in("task_id", matchingTaskIds)
+        .order("created_at", { ascending: false });
+
+    if (tasksError) {
+        console.error(tasksError);
+        groupTasksList.innerHTML = `
+            <div style="text-align:center;color:rgba(255,255,255,0.4);padding:20px;">
+                Could not load group tasks
+            </div>
+        `;
+        return;
+    }
+
+    groupTasksList.innerHTML = (tasks || []).map(task => `
+        <div class="day-entry-item">
+            <span class="day-entry-dot ${task.status === "done" ? "task done" : "task"}"></span>
+
+            <span style="${task.status === "done" ? "text-decoration:line-through;opacity:0.6;" : ""}">
+                ${escapeHtml(task.title)}
             </span>
 
-            ${t.due_date ? `
+            ${task.priority ? `
                 <span class="day-entry-tag">
-                    ${new Date(t.due_date).toLocaleDateString("en", {
+                    ${escapeHtml(task.priority)}
+                </span>
+            ` : ""}
+
+            ${task.due_date ? `
+                <span class="day-entry-tag">
+                    ${new Date(task.due_date).toLocaleDateString("en", {
         month: "short",
         day: "numeric"
     })}
@@ -383,7 +482,14 @@ async function loadGroupTasks(groupId) {
 }
 
 function escapeHtml(str) {
-    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    if (!str) {
+        return "";
+    }
+
+    return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
 }
 
 loadGroups();

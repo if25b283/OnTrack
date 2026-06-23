@@ -2814,21 +2814,6 @@ body {
   color: #12385a;
 }
 
-.todo-edit-btn {
-  border: none;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.75);
-  color: #12385a;
-  padding: 7px 12px;
-  font-weight: bold;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-
-.todo-edit-btn:hover {
-  background: white;
-}
-
 .task-detail-priority {
   display: flex;
   align-items: center;
@@ -2857,12 +2842,6 @@ body {
 .delete-confirm-btn {
   background: #e05c5c !important;
   color: white !important;
-}
-
-.create-group-btn {
-  background: rgba(255, 255, 255, 0.2) !important;
-  color: white !important;
-  display: none;
 }
 
 .task-detail-box {
@@ -2894,8 +2873,31 @@ body {
   }
 
   .todo-priority-badge,
-  .todo-due,
-  .todo-edit-btn {
+  .todo-due {
     margin-left: 46px;
   }
+}
+
+.task-detail-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#edit-task-from-detail-btn {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+#edit-task-from-detail-btn:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+#delete-task-from-detail-btn {
+  background: #e05c5c;
+  color: white;
+}
+
+#delete-task-from-detail-btn:hover {
+  background: #c94343;
 }
