@@ -1360,6 +1360,7 @@ body {
 
 
 /* ===== TIMER PAGE ===== */
+
 .timer-page {
   min-height: 100vh;
   background-color: #74a1bc;
@@ -1370,14 +1371,16 @@ body {
   justify-content: center;
   align-items: center;
   min-height: calc(100vh - 94px);
-  padding-bottom: 120px;
+  padding: 80px 20px 120px;
 }
 
 .timer-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 28px;
+  gap: 26px;
+  width: 100%;
+  max-width: 620px;
 }
 
 .timer-mode-buttons {
@@ -1393,8 +1396,8 @@ body {
   background: rgba(255, 255, 255, 0.15);
   border: 2px solid rgba(255, 255, 255, 0.5);
   color: white;
-  border-radius: 10px;
-  padding: 10px 18px;
+  border-radius: 14px;
+  padding: 12px 22px;
   font-size: 1em;
   font-weight: bold;
   cursor: pointer;
@@ -1410,12 +1413,44 @@ body {
 
 .timer-display {
   font-size: 8em;
-  font-weight: 600;
+  font-weight: 700;
   color: white;
   font-family: Arial, sans-serif;
   font-variant-numeric: tabular-nums;
-  text-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 0 22px rgba(0, 0, 0, 0.3);
   letter-spacing: 2px;
+}
+
+.timer-subject-button {
+  width: 100%;
+  max-width: 520px;
+  border: none;
+  border-radius: 26px;
+  background: rgba(255, 255, 255, 0.23);
+  color: white;
+  padding: 18px 24px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 10px 25px rgba(18, 56, 90, 0.18);
+  transition: 0.2s;
+}
+
+.timer-subject-button:hover {
+  background: rgba(255, 255, 255, 0.32);
+  transform: translateY(-2px);
+}
+
+#subjectButtonTitle {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+#subjectButtonInfo {
+  font-size: 14px;
+  opacity: 0.85;
 }
 
 .timer-controls {
@@ -1426,9 +1461,9 @@ body {
 }
 
 .timer-ctrl-btn {
-  width: 52px;
-  height: 52px;
-  border-radius: 10px;
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
   border: 2px solid rgba(255, 255, 255, 0.5);
   background: rgba(255, 255, 255, 0.15);
   color: white;
@@ -1436,6 +1471,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 26px;
   transition: 0.2s;
 }
 
@@ -1448,12 +1484,12 @@ body {
 .timer-start-btn {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   background: white;
   color: #38627c;
   border: 2px solid white;
-  border-radius: 10px;
-  padding: 12px 32px;
+  border-radius: 16px;
+  padding: 14px 42px;
   font-size: 1.1em;
   font-weight: bold;
   cursor: pointer;
@@ -1471,13 +1507,12 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   background: #38627c;
-  padding: 26px 24px;
-  border-radius: 18px;
-  border: 2px solid rgba(255, 255, 255, 0.35);
+  padding: 28px 26px;
+  border-radius: 24px;
   z-index: 1500;
   color: white;
-  width: 300px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  width: 330px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
 }
 
 .timer-settings-popup.active {
@@ -1485,27 +1520,27 @@ body {
 }
 
 .timer-settings-popup h3 {
-  margin: 0 0 16px 0;
-  font-size: 18px;
+  margin: 0 0 18px;
+  font-size: 22px;
 }
 
 .settings-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
-  margin-top: 12px;
+  gap: 12px;
+  margin-top: 14px;
 }
 
 .settings-row label {
-  font-size: 14px;
+  font-size: 15px;
   opacity: 0.9;
 }
 
 .settings-row input {
-  width: 70px;
-  padding: 8px;
-  border-radius: 8px;
+  width: 78px;
+  padding: 10px;
+  border-radius: 12px;
   border: none;
   font-size: 15px;
   text-align: center;
@@ -1516,17 +1551,16 @@ body {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  margin-top: 18px;
+  margin-top: 22px;
 }
 
 .settings-actions button {
-  padding: 9px 20px;
+  padding: 10px 22px;
   border: none;
-  border-radius: 8px;
+  border-radius: 14px;
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
-  transition: 0.2s;
 }
 
 .settings-save-btn {
@@ -1534,18 +1568,163 @@ body {
   color: #38627c;
 }
 
-.settings-save-btn:hover {
-  background: #e4eef5;
-}
-
 .settings-close-btn {
   background: rgba(255, 255, 255, 0.2);
   color: white;
-  border: 1px solid rgba(255, 255, 255, 0.4) !important;
 }
 
-.settings-close-btn:hover {
-  background: rgba(255, 255, 255, 0.35);
+.timer-subject-popup {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 56, 90, 0.55);
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  padding: 20px;
+}
+
+.timer-subject-popup.active {
+  display: flex;
+}
+
+.subject-popup-box {
+  width: 100%;
+  max-width: 480px;
+  background: #38627c;
+  color: white;
+  border-radius: 30px;
+  padding: 28px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+}
+
+.subject-popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+.subject-popup-header h3 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.subject-popup-header button {
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 26px;
+  cursor: pointer;
+}
+
+.subject-add-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.subject-add-row input {
+  flex: 1;
+  height: 48px;
+  border: none;
+  border-radius: 18px;
+  padding: 0 16px;
+  font-size: 15px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.22);
+  color: white;
+}
+
+.subject-add-row input::placeholder {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.subject-add-row button {
+  border: none;
+  border-radius: 18px;
+  padding: 0 18px;
+  background: white;
+  color: #38627c;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.subject-current-box {
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 18px;
+  padding: 14px 16px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.subject-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.subject-item {
+  border: none;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.16);
+  color: white;
+  border-radius: 18px;
+  padding: 14px 16px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  text-align: left;
+}
+
+.subject-item:hover,
+.subject-item.active {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.subject-name {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.subject-time {
+  font-size: 13px;
+  opacity: 0.8;
+  white-space: nowrap;
+}
+
+.subject-empty {
+  margin: 0;
+  opacity: 0.75;
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  .timer-display {
+    font-size: 5.2em;
+  }
+
+  .timer-subject-button {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .subject-add-row {
+    flex-direction: column;
+  }
+
+  .subject-add-row button {
+    height: 46px;
+  }
+
+  .subject-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 /* ===== TODO PAGE ===== */
