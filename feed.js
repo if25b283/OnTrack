@@ -65,7 +65,6 @@ function closeEditModal() {
 
 fab.addEventListener("click", openModal);
 closeBtn.addEventListener("click", closeModal);
-
 cancelEditPost.addEventListener("click", closeEditModal);
 
 editPostModal.addEventListener("click", (e) => {
@@ -77,7 +76,9 @@ editPostModal.addEventListener("click", (e) => {
 saveEditPost.addEventListener("click", async () => {
     const newContent = editPostText.value.trim();
 
-    if (!editingPostId) return;
+    if (!editingPostId) {
+        return;
+    }
 
     const { error } = await supabase
         .from("posts")
@@ -87,7 +88,7 @@ saveEditPost.addEventListener("click", async () => {
 
     if (error) {
         console.error(error);
-        alert("Post konnte nicht bearbeitet werden.");
+        alert("Post could not be edited.");
         return;
     }
 
@@ -121,7 +122,9 @@ document.addEventListener("keydown", (e) => {
 imageInput.addEventListener("change", () => {
     const file = imageInput.files[0];
 
-    if (!file) return;
+    if (!file) {
+        return;
+    }
 
     selectedImageFile = file;
     imagePreview.src = URL.createObjectURL(file);
@@ -138,7 +141,9 @@ removeImageBtn.addEventListener("click", () => {
 submitBtn.addEventListener("click", async () => {
     const content = textarea.value.trim();
 
-    if (!content && !selectedImageFile) return;
+    if (!content && !selectedImageFile) {
+        return;
+    }
 
     submitBtn.disabled = true;
     submitBtn.textContent = "Posting…";
@@ -154,7 +159,9 @@ submitBtn.addEventListener("click", async () => {
                 .from("posts")
                 .upload(path, selectedImageFile, { upsert: true });
 
-            if (uploadErr) throw uploadErr;
+            if (uploadErr) {
+                throw uploadErr;
+            }
 
             const { data: urlData } = supabase.storage
                 .from("posts")
@@ -169,13 +176,15 @@ submitBtn.addEventListener("click", async () => {
             image_url: imageUrl
         });
 
-        if (error) throw error;
+        if (error) {
+            throw error;
+        }
 
         closeModal();
         await loadFeed();
     } catch (err) {
         console.error(err);
-        alert("Post konnte nicht erstellt werden.");
+        alert("Post could not be created.");
     }
 
     submitBtn.disabled = false;
@@ -223,12 +232,12 @@ async function loadFeed() {
 
     if (error) {
         console.error(error);
-        feedEl.innerHTML = `<div class="feed-loading">Posts konnten nicht geladen werden.</div>`;
+        feedEl.innerHTML = `<div class="feed-loading">Posts could not be loaded.</div>`;
         return;
     }
 
     if (!posts || posts.length === 0) {
-        feedEl.innerHTML = `<div class="feed-empty">Noch keine Posts vorhanden.</div>`;
+        feedEl.innerHTML = `<div class="feed-empty">No posts yet.</div>`;
         return;
     }
 
@@ -262,22 +271,26 @@ function renderPost(post, followingSet = new Set()) {
                     </div>
                 </a>
 
-                ${(!isOwn && !isFollowing) ? `<button class="post-follow-btn" data-uid="${author?.id}">+ Follow</button>` : ""}
+                ${(!isOwn && !isFollowing) ? `
+                    <button class="post-follow-btn" data-uid="${author?.id}">+ Follow</button>
+                ` : ""}
 
-                <div class="post-menu-wrapper">
-                    <button class="post-menu-btn" aria-label="Post options">⋯</button>
-                    <div class="post-menu">
-                        ${isOwn ? `
-                            <button class="edit-post-btn" data-post-id="${post.post_id}">Bearbeiten</button>
-                            <button class="delete-post-btn" data-post-id="${post.post_id}">Löschen</button>
-                        ` : `
-                            <button class="report-post-btn">Melden</button>
-                        `}
+                ${isOwn ? `
+                    <div class="post-menu-wrapper">
+                        <button class="post-menu-btn" aria-label="Post options">⋯</button>
+                        <div class="post-menu">
+                            <button class="edit-post-btn" data-post-id="${post.post_id}">Edit</button>
+                            <button class="delete-post-btn" data-post-id="${post.post_id}">Delete</button>
+                        </div>
                     </div>
-                </div>
+                ` : ""}
             </div>
 
-            ${post.image_url ? `<div class="post-image-wrapper"><img src="${post.image_url}" alt="Post image" class="post-image"></div>` : ""}
+            ${post.image_url ? `
+                <div class="post-image-wrapper">
+                    <img src="${post.image_url}" alt="Post image" class="post-image">
+                </div>
+            ` : ""}
 
             ${post.content ? `<p class="post-content">${escapeHtml(post.content)}</p>` : ""}
 
@@ -295,8 +308,8 @@ function renderPost(post, followingSet = new Set()) {
             <div class="comments-section">
                 ${renderComments(comments)}
                 <form class="comment-form" data-post-id="${post.post_id}">
-                    <input type="text" class="comment-input" placeholder="Kommentar schreiben...">
-                    <button type="submit" class="comment-send-btn">Senden</button>
+                    <input type="text" class="comment-input" placeholder="Write a comment...">
+                    <button type="submit" class="comment-send-btn">Send</button>
                 </form>
             </div>
         </article>
@@ -305,7 +318,7 @@ function renderPost(post, followingSet = new Set()) {
 
 function renderComments(comments) {
     if (!comments || comments.length === 0) {
-        return `<div class="no-comments">Noch keine Kommentare.</div>`;
+        return `<div class="no-comments">No comments yet.</div>`;
     }
 
     return comments
@@ -329,7 +342,6 @@ feedEl.addEventListener("click", async (e) => {
     const menuBtn = e.target.closest(".post-menu-btn");
     const editBtn = e.target.closest(".edit-post-btn");
     const deleteBtn = e.target.closest(".delete-post-btn");
-    const reportBtn = e.target.closest(".report-post-btn");
 
     if (likeBtn) {
         await toggleLike(likeBtn);
@@ -341,7 +353,9 @@ feedEl.addEventListener("click", async (e) => {
         const menu = wrapper.querySelector(".post-menu");
 
         document.querySelectorAll(".post-menu.open").forEach(openMenu => {
-            if (openMenu !== menu) openMenu.classList.remove("open");
+            if (openMenu !== menu) {
+                openMenu.classList.remove("open");
+            }
         });
 
         menu.classList.toggle("open");
@@ -360,12 +374,21 @@ feedEl.addEventListener("click", async (e) => {
 
     if (deleteBtn) {
         const postId = deleteBtn.dataset.postId;
-        const confirmDelete = confirm("Möchtest du diesen Post wirklich löschen?");
+        const confirmDelete = confirm("Do you really want to delete this post?");
 
-        if (!confirmDelete) return;
+        if (!confirmDelete) {
+            return;
+        }
 
-        await supabase.from("post_likes").delete().eq("post_id", postId);
-        await supabase.from("post_comments").delete().eq("post_id", postId);
+        await supabase
+            .from("post_likes")
+            .delete()
+            .eq("post_id", postId);
+
+        await supabase
+            .from("post_comments")
+            .delete()
+            .eq("post_id", postId);
 
         const { error } = await supabase
             .from("posts")
@@ -375,22 +398,19 @@ feedEl.addEventListener("click", async (e) => {
 
         if (error) {
             console.error(error);
-            alert("Post konnte nicht gelöscht werden.");
+            alert("Post could not be deleted.");
             return;
         }
 
         await loadFeed();
         return;
     }
-
-    if (reportBtn) {
-        alert("Post wurde gemeldet.");
-        closeAllMenus();
-    }
 });
 
 feedEl.addEventListener("submit", async (e) => {
-    if (!e.target.classList.contains("comment-form")) return;
+    if (!e.target.classList.contains("comment-form")) {
+        return;
+    }
 
     e.preventDefault();
 
@@ -399,7 +419,9 @@ feedEl.addEventListener("submit", async (e) => {
     const input = form.querySelector(".comment-input");
     const text = input.value.trim();
 
-    if (!text) return;
+    if (!text) {
+        return;
+    }
 
     const { error } = await supabase.from("post_comments").insert({
         post_id: postId,
@@ -409,7 +431,7 @@ feedEl.addEventListener("submit", async (e) => {
 
     if (error) {
         console.error(error);
-        alert("Kommentar konnte nicht gespeichert werden.");
+        alert("Comment could not be saved.");
         return;
     }
 
@@ -461,20 +483,29 @@ function formatTime(iso) {
     const diff = Date.now() - new Date(iso).getTime();
     const mins = Math.floor(diff / 60000);
 
-    if (mins < 1) return "just now";
-    if (mins < 60) return `${mins}m ago`;
+    if (mins < 1) {
+        return "just now";
+    }
+
+    if (mins < 60) {
+        return `${mins}m ago`;
+    }
 
     const hrs = Math.floor(mins / 60);
 
-    if (hrs < 24) return `${hrs}h ago`;
+    if (hrs < 24) {
+        return `${hrs}h ago`;
+    }
 
     return `${Math.floor(hrs / 24)}d ago`;
 }
 
 function escapeHtml(str) {
-    if (!str) return "";
+    if (!str) {
+        return "";
+    }
 
-    return str
+    return String(str)
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;");
