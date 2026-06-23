@@ -2949,12 +2949,22 @@ body {
   background: rgba(224, 92, 92, 0.55);
 }
 
+/* ===== START PAGE PREVIEW SHOWCASE ===== */
+
+.startseite main {
+  flex: 1;
+  background-color: #74a1bc;
+  position: relative;
+  min-height: calc(100vh - 165px - 28px);
+  overflow: hidden;
+}
+
 .preview-showcase {
   position: absolute;
-  right: 90px;
-  top: 58px;
-  width: 620px;
-  height: 430px;
+  left: 720px;
+  top: 55px;
+  width: 760px;
+  height: 500px;
 }
 
 .preview-card {
@@ -2962,7 +2972,7 @@ body {
   background: rgba(255, 255, 255, 0.35);
   border-radius: 24px;
   padding: 10px;
-  box-shadow: 0 18px 38px rgba(18, 56, 90, 0.22);
+  box-shadow: 0 18px 38px rgba(18, 56, 90, 0.24);
   overflow: hidden;
   backdrop-filter: blur(8px);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -2970,7 +2980,7 @@ body {
 
 .preview-card:hover {
   transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 22px 46px rgba(18, 56, 90, 0.3);
+  box-shadow: 0 22px 46px rgba(18, 56, 90, 0.32);
 }
 
 .preview-card img {
@@ -2983,55 +2993,84 @@ body {
 }
 
 .preview-card-large {
-  width: 430px;
-  height: 285px;
-  right: 20px;
-  top: 40px;
+  width: 520px;
+  height: 310px;
+  right: 0;
+  top: 55px;
   z-index: 1;
 }
 
 .preview-timer {
-  width: 260px;
-  height: 190px;
+  width: 300px;
+  height: 220px;
   left: 0;
   top: 0;
   z-index: 2;
 }
 
 .preview-todo {
-  width: 310px;
-  height: 185px;
-  left: 60px;
-  bottom: 8px;
+  width: 360px;
+  height: 210px;
+  left: 70px;
+  bottom: 20px;
   z-index: 3;
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1350px) {
+  .hero {
+    width: 430px;
+    left: 70px;
+  }
+
   .preview-showcase {
-    position: relative;
-    right: auto;
-    top: auto;
-    width: 90%;
-    height: 360px;
-    margin: 360px auto 40px;
+    left: 560px;
+    width: 610px;
+    height: 430px;
+  }
+
+  .preview-card-large {
+    width: 420px;
+    height: 260px;
+  }
+
+  .preview-timer {
+    width: 250px;
+    height: 180px;
+  }
+
+  .preview-todo {
+    width: 300px;
+    height: 180px;
+  }
+}
+
+@media (max-width: 980px) {
+  .startseite main {
+    overflow: visible;
   }
 
   .hero {
     position: relative;
     left: auto;
     top: auto;
-    width: 80%;
-    margin: 70px auto 0;
+    width: 82%;
+    margin: 60px auto 0;
   }
-}
 
-@media (max-width: 760px) {
+  .hero-btn {
+    margin-left: 0;
+  }
+
   .preview-showcase {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 82%;
     height: auto;
+    margin: 40px auto 50px;
     display: flex;
     flex-direction: column;
     gap: 16px;
-    margin: 40px auto;
   }
 
   .preview-card,
