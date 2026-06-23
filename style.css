@@ -2948,3 +2948,109 @@ body {
 .remove-group-member-btn:hover {
   background: rgba(224, 92, 92, 0.55);
 }
+
+.preview-showcase {
+  position: absolute;
+  right: 90px;
+  top: 58px;
+  width: 620px;
+  height: 430px;
+}
+
+.preview-card {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 24px;
+  padding: 10px;
+  box-shadow: 0 18px 38px rgba(18, 56, 90, 0.22);
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.preview-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 22px 46px rgba(18, 56, 90, 0.3);
+}
+
+.preview-card img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: 16px;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.preview-card-large {
+  width: 430px;
+  height: 285px;
+  right: 20px;
+  top: 40px;
+  z-index: 1;
+}
+
+.preview-timer {
+  width: 260px;
+  height: 190px;
+  left: 0;
+  top: 0;
+  z-index: 2;
+}
+
+.preview-todo {
+  width: 310px;
+  height: 185px;
+  left: 60px;
+  bottom: 8px;
+  z-index: 3;
+}
+
+@media (max-width: 1100px) {
+  .preview-showcase {
+    position: relative;
+    right: auto;
+    top: auto;
+    width: 90%;
+    height: 360px;
+    margin: 360px auto 40px;
+  }
+
+  .hero {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 80%;
+    margin: 70px auto 0;
+  }
+}
+
+@media (max-width: 760px) {
+  .preview-showcase {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 40px auto;
+  }
+
+  .preview-card,
+  .preview-card-large,
+  .preview-timer,
+  .preview-todo {
+    position: static;
+    width: 100%;
+    height: auto;
+  }
+
+  .preview-card img {
+    height: auto;
+  }
+
+  .startseite footer {
+    height: auto;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px;
+  }
+}
