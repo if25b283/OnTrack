@@ -1421,38 +1421,6 @@ body {
   letter-spacing: 2px;
 }
 
-.timer-subject-button {
-  width: 100%;
-  max-width: 520px;
-  border: none;
-  border-radius: 26px;
-  background: rgba(255, 255, 255, 0.23);
-  color: white;
-  padding: 18px 24px;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  box-shadow: 0 10px 25px rgba(18, 56, 90, 0.18);
-  transition: 0.2s;
-}
-
-.timer-subject-button:hover {
-  background: rgba(255, 255, 255, 0.32);
-  transform: translateY(-2px);
-}
-
-#subjectButtonTitle {
-  font-size: 18px;
-  font-weight: bold;
-}
-
-#subjectButtonInfo {
-  font-size: 14px;
-  opacity: 0.85;
-}
-
 .timer-controls {
   display: flex;
   justify-content: center;
@@ -1498,6 +1466,39 @@ body {
 
 .timer-start-btn:hover {
   background: rgba(255, 255, 255, 0.85);
+}
+
+.timer-subject-button {
+  width: 100%;
+  max-width: 520px;
+  border: none;
+  border-radius: 26px;
+  background: rgba(255, 255, 255, 0.23);
+  color: white;
+  padding: 18px 24px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 10px 25px rgba(18, 56, 90, 0.18);
+  transition: 0.2s;
+  margin-top: 8px;
+}
+
+.timer-subject-button:hover {
+  background: rgba(255, 255, 255, 0.32);
+  transform: translateY(-2px);
+}
+
+#subjectButtonTitle {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+#subjectButtonInfo {
+  font-size: 14px;
+  opacity: 0.85;
 }
 
 .timer-settings-popup {

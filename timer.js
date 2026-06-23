@@ -152,33 +152,34 @@ async function handleTimerEnd() {
 
         setTimeout(() => {
             setMode("break");
-            startPause();
-        }, 3000);
+        }, 2000);
     } else {
         setTimeout(() => {
             setMode("study");
-        }, 3000);
+        }, 2000);
     }
 
     updateDisplay();
 }
 
 async function saveStudyTime() {
-    if (!selectedSubject) {
+    if (!selectedSubject || currentMode !== "study") {
         return;
     }
+
+    const minutesToSave = studyTime;
 
     const { error } = await supabase
         .from("pomodoro_time_tracking")
         .insert({
             user_id: user.id,
             subject: selectedSubject,
-            minutes_studied: studyTime
+            minutes_studied: minutesToSave
         });
 
     if (error) {
-        console.error(error);
-        alert("Lernzeit konnte nicht gespeichert werden.");
+        console.error("Fehler beim Speichern:", error);
+        alert("Lernzeit konnte nicht gespeichert werden. Bitte Datenbank prüfen.");
         return;
     }
 
@@ -189,8 +190,8 @@ async function saveStudyTime() {
         };
     }
 
-    subjectStats[selectedSubject].total += studyTime;
-    subjectStats[selectedSubject].today += studyTime;
+    subjectStats[selectedSubject].total += minutesToSave;
+    subjectStats[selectedSubject].today += minutesToSave;
 
     updateSubjectButton();
     renderSubjects();
@@ -235,11 +236,18 @@ async function loadSubjects() {
         .select("subject, minutes_studied, tracked_at")
         .eq("user_id", user.id);
 
-    if (!error && data) {
-        const todayString = new Date().toDateString();
+    if (error) {
+        console.error("Fehler beim Laden der Lernzeiten:", error);
+        updateSubjectButton();
+        renderSubjects();
+        return;
+    }
 
+    const todayString = new Date().toDateString();
+
+    if (data) {
         data.forEach(entry => {
-            const subject = entry.subject || "Study Session";
+            const subject = entry.subject;
             const minutes = Number(entry.minutes_studied) || 0;
             const entryDate = new Date(entry.tracked_at).toDateString();
 
