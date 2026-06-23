@@ -45,12 +45,39 @@ function formatDisplayDate(dateStr) {
 
 // ---- Load data ----
 async function loadData() {
-  const [eventsRes, tasksRes] = await Promise.all([
-    supabase.from("calendar_events").select("*").eq("user_id", user.id),
-    supabase.from("tasks").select("task_id, title, due_date, status").eq("created_by", user.id).not("due_date", "is", null)
-  ]);
+  const eventsRes = await supabase
+    .from("calendar_events")
+    .select("*")
+    .eq("user_id", user.id);
+
+  const { data: myAssignments, error: assignmentError } = await supabase
+    .from("task_assignees")
+    .select("task_id")
+    .eq("user_id", user.id);
+
+  if (assignmentError) {
+    console.error(assignmentError);
+    allEvents = eventsRes.data || [];
+    allTasks = [];
+    renderCalendar();
+    return;
+  }
+
+  const taskIds = (myAssignments || []).map(row => row.task_id);
+
+  let tasksRes = { data: [] };
+
+  if (taskIds.length > 0) {
+    tasksRes = await supabase
+      .from("tasks")
+      .select("task_id, title, due_date, status")
+      .in("task_id", taskIds)
+      .not("due_date", "is", null);
+  }
+
   allEvents = eventsRes.data || [];
   allTasks = tasksRes.data || [];
+
   renderCalendar();
 }
 
